@@ -1,6 +1,6 @@
 USE school;
 
-CREATE table Users (
+CREATE table User (
 	UserId int NOT NULL auto_increment primary key,
     UserName varchar(50) NOT NULL,
     email varchar(50) NOT NULL,
@@ -35,7 +35,7 @@ CREATE table UserIngredient (
     Quantity float,
     primary key(IngredientId, UserId),
     foreign key(IngredientId) REFERENCES Ingredient(IngredientId),
-    foreign key(UserId) REFERENCES Users(UserId)
+    foreign key(UserId) REFERENCES User(UserId)
 );
 
 CREATE table Vote (
@@ -43,12 +43,12 @@ CREATE table Vote (
     RecipeId int NOT NULL,
     VoteValue int NOT NULL default 0,
     primary key(UserId, RecipeId),
-    foreign key(UserId) REFERENCES Users(UserId),
+    foreign key(UserId) REFERENCES User(UserId),
     foreign key(RecipeId) REFERENCES Recipe(RecipeId)
 );
 
 ALTER TABLE Recipe ADD UserId INT NOT NULL;
-ALTER TABLE Recipe ADD CONSTRAINT fk_UserId FOREIGN KEY (UserId) REFERENCES Users(UserId);
+ALTER TABLE Recipe ADD CONSTRAINT fk_UserId FOREIGN KEY (UserId) REFERENCES User(UserId);
 
 
 INSERT INTO Ingredient(IngredientName,measureType)
