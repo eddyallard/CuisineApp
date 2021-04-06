@@ -1,0 +1,11 @@
+<span><h1>{{recipe.RecipeName}}</h1></span> 
+
+<p>Ingredient</p>
+<ul class="list-group">
+    <li *ngFor="let ingredient of recipe.Ingredients">
+      <span class="list-group-item">{{ingredient}}</span>
+    </li>
+  </ul>
+
+<p>{{recipe.Instruction}}</p>
+<span>{{upvotes.VoteValue}}</span>
