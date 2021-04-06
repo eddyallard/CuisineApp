@@ -4,6 +4,7 @@ import lombok.*;
 import models.entities.id_classes.VoteId;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.io.Serializable;
 
 @Entity
@@ -28,6 +29,5 @@ public class Vote implements Serializable {
     private Recipe recipe;
 
     @Column(name = "VoteValue")
-
     private Integer voteValue;
 }

@@ -3,6 +3,7 @@ package models.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,12 +19,15 @@ public class User implements Serializable {
     private Integer userId;
 
     @Column(name = "UserName")
+    @Size(min = 2, max = 50)
     private String userName;
 
     @Column(name = "email")
+    @Size(min = 2, max = 50)
     private String email;
 
     @Column(name = "UserPassword")
+    @Size(min = 2, max = 50)
     private String userPassword;
 
     @OneToMany(mappedBy = "user")
