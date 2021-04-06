@@ -12,6 +12,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Data
 @IdClass(UserIngredientId.class)
+@NamedQueries(
+        @NamedQuery(name = "UserIngredient.findByUserId", query = "SELECT ui FROM UserIngredient ui WHERE ui.user.userId = :id")
+)
 public class UserIngredient implements Serializable {
     @Id
     @ManyToOne
