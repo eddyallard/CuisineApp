@@ -28,5 +28,6 @@ public class Vote implements Serializable {
     private Recipe recipe;
 
     @Column(name = "VoteValue")
+
     private Integer voteValue;
 }
