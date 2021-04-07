@@ -18,7 +18,4 @@ public class UserIngredientService {
         return repos.findById(id);
     }
 
-    public List<UserIngredient> findByUserId(Integer id){
-        return repos.findByUserId(id);
-    }
 }

@@ -18,7 +18,4 @@ public class VoteService {
         return repos.findById(id);
     }
 
-    public List<Vote> findByUserId(Integer id){
-        return repos.findByUserId(id);
-    }
 }

@@ -12,9 +12,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Data
 @IdClass(VoteId.class)
-@NamedQueries({
-        @NamedQuery(name = "Vote.findByUserId", query = "SELECT v FROM Vote v WHERE v.user.userId = :id")
-})
 public class Vote implements Serializable {
     @Id
     @ManyToOne

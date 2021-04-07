@@ -16,7 +16,4 @@ public class RecipeService {
     public Optional<Recipe> findById(Integer id){
         return repos.findById(id);
     }
-    public List<Recipe> findByAuthorId(Integer id){
-        return repos.findByAuthorId(id);
-    }
 }

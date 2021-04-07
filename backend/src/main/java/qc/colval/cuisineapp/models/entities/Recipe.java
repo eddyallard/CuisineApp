@@ -12,9 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@NamedQueries({
-        @NamedQuery(name = "Recipe.findByAuthorId", query = "SELECT r FROM Recipe r WHERE r.author.userId = :id")
-})
 public class Recipe implements Serializable {
     @Id
     @Column(name = "RecipeId")
