@@ -1,10 +1,12 @@
-<form class="form-inline my-2 my-lg-0">
+<div style="float: right;">
+  <form class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
+</div>
 
-<div class="container mt-5">
-  <div class="card" style="width: 18rem;" *ngFor="let recipe of recipes">
+<div class="overflow-auto " style="margin: auto; max-height: 45rem;">
+  <div class="card text-white bg-dark mb-3" style="width: 18rem; margin: auto;;" *ngFor="let recipe of recipes">
     <img class="card-img-top" src="assets/images/jerma.jpg" alt="Card image cap">
     <div class="card-body">
       <p class="card-text">{{recipe.RecipeName}}</p>
@@ -12,5 +14,4 @@
     <a href="recipes/{{recipe.Id - 1}}" class="card-link">View full recipe</a>
   </div>
 </div>
-
 
