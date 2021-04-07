@@ -15,7 +15,5 @@ public class RecipeDTO {
     private Integer recipeId;
     private String recipeName;
     private String recipeInstruction;
-    private Integer userId;
-    private List<Integer> voterIds;
-    private List<Integer> ingredientIds;
+    private Integer authorId;
 }

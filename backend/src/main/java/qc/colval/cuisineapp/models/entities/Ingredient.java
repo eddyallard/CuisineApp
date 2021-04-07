@@ -24,9 +24,4 @@ public class Ingredient implements Serializable {
 
     @Column(name = "measureType")
     private String measureType;
-
-    @OneToMany(mappedBy = "ingredient")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<RecipeIngredient> recipes;
 }

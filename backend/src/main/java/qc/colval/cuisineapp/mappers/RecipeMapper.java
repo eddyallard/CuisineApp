@@ -6,19 +6,26 @@ import qc.colval.cuisineapp.models.dto.RecipeDTO;
 import qc.colval.cuisineapp.models.entities.Recipe;
 import qc.colval.cuisineapp.services.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class RecipeMapper implements EntityMapper<Recipe, RecipeDTO>{
     private final RecipeService recipeService;
     private final VoteService voteService;
-    private final UserIngredientService recipeIngredientService;
+    private final RecipeIngredientService recipeIngredientService;
     private final UserService userService;
     private final IngredientService ingredientService;
 
     @Override
     public RecipeDTO entityToDto(Recipe entity) {
-
-        return null;
+        return new RecipeDTO(
+                entity.getRecipeId(),
+                entity.getRecipeName(),
+                entity.getRecipeInstruction(),
+                entity.getAuthor().getUserId()
+        );
     }
 
     @Override

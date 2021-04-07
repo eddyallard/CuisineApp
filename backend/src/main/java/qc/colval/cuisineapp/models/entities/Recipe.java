@@ -31,14 +31,4 @@ public class Recipe implements Serializable {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private User author;
-
-    @OneToMany(mappedBy = "recipe")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<Vote> votes;
-
-    @OneToMany(mappedBy = "recipe")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<RecipeIngredient> ingredients;
 }

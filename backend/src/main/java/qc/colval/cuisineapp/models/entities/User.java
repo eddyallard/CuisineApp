@@ -29,19 +29,4 @@ public class User implements Serializable {
     @Column(name = "UserPassword")
     @Size(min = 2, max = 50)
     private String userPassword;
-
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<Vote> votes;
-
-    @OneToMany(mappedBy = "author")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<Recipe> recipes;
-
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<UserIngredient> ingredients;
 }
