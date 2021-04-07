@@ -1,6 +1,9 @@
-export interface Recipe {
-    Id: number;
-    RecipeName: string;
-    Instruction: string;
-    Ingredients: string[];
+export class Recipe {
+    constructor(
+        public Id: number,
+        public RecipeName: string,
+        public Instruction: string,
+        public Ingredients: string[],
+      ) {  }
+    
   }

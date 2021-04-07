@@ -1,1 +1,17 @@
-<p>login works!</p>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm">
+        <div class="card" style="width: 18rem;">
+            <h3>Login</h3>
+            <div class="form-group">
+                <input type="text" class="form-control" id="email"
+                   required
+                   [(ngModel)]="model.Email" name="email">
+                <input type="text" class="form-control" id="password"
+                    required
+                    [(ngModel)]="model.Password" name="password">
+                   <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+          </div>
+      </div>
+    </div>

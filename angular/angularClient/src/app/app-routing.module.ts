@@ -14,7 +14,8 @@ const routes: Routes = [];
     [{path: '', redirectTo: '/home', pathMatch: 'full'},
       {path: 'home', component: HomeComponent},
      {path: 'recipes/all', component: RecipeListComponent},
-     {path: 'login', component : LoginComponent}
+     {path: 'login', component : LoginComponent},
+     {path: 'recipes/:id', component : RecipeDetailComponent}
   ]
   )],
   exports: [RouterModule]

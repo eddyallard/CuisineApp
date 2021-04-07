@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Recipe} from '../interfaces/recipe'
+import {Recipe} from '../interfaces/recipe';
+import {RecipeService} from '../recipe.service';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-recipe-detail',
@@ -8,16 +12,20 @@ import {Recipe} from '../interfaces/recipe'
 })
 export class RecipeDetailComponent implements OnInit {
 
-  recipe: Recipe = {
-    Id : 1,
-    RecipeName: "Cooked water",
-    Instruction: "Put the water in a large saucepan and let it simmer until you see bubbles start to form",
-    Ingredients: ["250ml of water","15 ton of salt"]
+  recipe: Recipe = null;
+  constructor(
+    private recipeService : RecipeService,
+    private location: Location,
+    private activatedRoute: ActivatedRoute
+    ) { }
+
+  getRecipe(): void {
+    const id = +this.activatedRoute.snapshot.paramMap.get('id');
+    this.recipe = this.recipeService.getRecipeById(id);
   }
 
-  constructor() { }
-
   ngOnInit(): void {
+    this.getRecipe();
   }
 
 }
