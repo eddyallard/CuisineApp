@@ -5,11 +5,16 @@ import qc.colval.cuisineapp.models.entities.User;
 import org.springframework.stereotype.Service;
 import qc.colval.cuisineapp.repositories.IUserRepository;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class UserService {
     private final IUserRepository repos;
 
+    public Optional<User> findById(Integer id){
+        return repos.findById(id);
+    }
     public void addUser(User user){
         user.setUserId(null);
         repos.save(user);
