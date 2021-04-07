@@ -15,10 +15,10 @@ import qc.colval.cuisineapp.services.UserService;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final EntityMapper<User, UserDTO> mapper;
+    private final EntityMapper<User, UserDTO> userMapper;
 
     @PostMapping
     public void addUser(@RequestBody UserDTO userDTO){
-        userService.addUser(mapper.dtoToEntity(userDTO));
+        userService.addUser(userMapper.dtoToEntity(userDTO));
     }
 }

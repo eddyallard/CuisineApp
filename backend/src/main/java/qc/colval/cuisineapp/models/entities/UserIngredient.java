@@ -14,18 +14,10 @@ import java.io.Serializable;
 @IdClass(UserIngredientId.class)
 public class UserIngredient implements Serializable {
     @Id
-    @ManyToOne
-    @JoinColumn(name = "IngredientId", referencedColumnName = "IngredientId")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Ingredient ingredient;
+    private Integer ingredientId;
 
     @Id
-    @ManyToOne
-    @JoinColumn(name = "UserId", referencedColumnName = "UserId")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private User user;
+    private Integer userId;
 
     @Column(name = "Quantity")
     private Float quantity;
