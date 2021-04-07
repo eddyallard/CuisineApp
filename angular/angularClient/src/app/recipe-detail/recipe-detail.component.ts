@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {Recipe} from '../Interface/recipe'
-import {Vote} from '../Interface/vote'
+import {Recipe} from '../interfaces/recipe'
 
 @Component({
-  selector: 'app-recipes',
-  templateUrl: './recipes.component.html',
-  styleUrls: ['./recipes.component.css']
+  selector: 'app-recipe-detail',
+  templateUrl: './recipe-detail.component.html',
+  styleUrls: ['./recipe-detail.component.css']
 })
-export class RecipesComponent implements OnInit {
+export class RecipeDetailComponent implements OnInit {
 
   recipe: Recipe = {
     Id : 1,
@@ -16,10 +15,6 @@ export class RecipesComponent implements OnInit {
     Ingredients: ["250ml of water","15 ton of salt"]
   }
 
-  upvotes: Vote = {
-      Id: 1,
-      VoteValue: 69420
-  }
   constructor() { }
 
   ngOnInit(): void {
