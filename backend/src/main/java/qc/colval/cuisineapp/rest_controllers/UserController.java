@@ -18,7 +18,7 @@ public class UserController {
     private final EntityMapper<User, UserDTO> userMapper;
 
     @PostMapping
-    public void addUser(@RequestBody UserDTO userDTO){
-        userService.save(userMapper.dtoToEntity(userDTO));
+    public User addUser(@RequestBody UserDTO userDTO){
+        return userService.save(userMapper.dtoToEntity(userDTO));
     }
 }

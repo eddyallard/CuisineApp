@@ -21,7 +21,7 @@ public class RecipeService {
         return repos.findAll();
     }
 
-    public Recipe addRecipe(Recipe recipe){
+    public Recipe save(Recipe recipe){
         return repos.save(recipe);
     }
 

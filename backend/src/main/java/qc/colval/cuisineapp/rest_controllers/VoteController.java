@@ -21,18 +21,19 @@ public class VoteController {
     private final EntityMapper<Vote, VoteDTO> voteMapper;
 
     @PostMapping
-    public void postVote(@RequestBody VoteDTO voteDTO){
+    public Vote postVote(@RequestBody VoteDTO voteDTO){
         Vote vote = voteMapper.dtoToEntity(voteDTO);
         Optional<Vote> existing = voteService.findById(new VoteId(vote.getRecipeId(), vote.getUserId()));
         //If the value of the vote changes
         if (existing.isPresent() && !existing.get().getVoteValue().equals(vote.getVoteValue())){
             Vote updatedVote = existing.get();
             updatedVote.setVoteValue(vote.getVoteValue());
-            voteService.save(updatedVote);
+            return voteService.save(updatedVote);
         }
         //Else if the vote didnt exist;
         else if (existing.isEmpty()){
-            voteService.save(vote);
+            return voteService.save(vote);
         }
+        return null;
     }
 }

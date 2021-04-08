@@ -23,13 +23,28 @@ public class RecipeController {
     private final EntityMapper<RecipeIngredient, RecipeIngredientDTO> recipeIngredientMapper;
 
     @PostMapping
-    public void addRecipe(@RequestBody RecipeAndRecipeIngredientDTO dto){
+    public Recipe addRecipe(@RequestBody RecipeAndRecipeIngredientDTO dto){
         dto.getRecipeDTO().setRecipeId(null);
-        Recipe newRecipe = recipeService.addRecipe(recipeMapper.dtoToEntity(dto.getRecipeDTO()));
+        Recipe newRecipe = recipeService.save(recipeMapper.dtoToEntity(dto.getRecipeDTO()));
         dto.getRecipeIngredientDTOs().forEach(recipeIngredientDTO -> {
             recipeIngredientDTO.setRecipeId(newRecipe.getRecipeId());
             recipeIngredientService.save(recipeIngredientMapper.dtoToEntity(recipeIngredientDTO));
         });
+        return newRecipe;
+    }
+
+    @PutMapping ("/name/{id}")
+    public Recipe editRecipeName(@PathVariable Integer id, @RequestBody String newName){
+        Recipe recipe = recipeService.findById(id).get();
+        recipe.setRecipeName(newName);
+        return recipeService.save(recipe);
+    }
+
+    @PutMapping ("/instruction/{id}")
+    public Recipe editRecipeInstruction(@PathVariable Integer id, @RequestBody String newInstruction){
+        Recipe recipe = recipeService.findById(id).get();
+        recipe.setRecipeInstruction(newInstruction);
+        return recipeService.save(recipe);
     }
 
     @GetMapping List<Recipe> allRecipes(){
