@@ -3,15 +3,35 @@
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
+  <label>Cant find a recipe? Create your own!</label>
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 </div>
 
-<div class="overflow-auto " style="margin: auto; max-height: 45rem;">
-  <div class="card text-white bg-dark mb-3" style="width: 18rem; margin: auto;;" *ngFor="let recipe of recipes">
-    <img class="card-img-top" src="assets/images/jerma.jpg" alt="Card image cap">
-    <div class="card-body">
-      <p class="card-text">{{recipe.RecipeName}}</p>
+<div class="overflow-auto" style="margin: auto; max-height: 45rem;">
+  <div class="container ">
+    <div class="row">
+      <div class="col-sm" style="margin-top: 1rem;">
+        <div class="card text-white bg-dark" style="width: 20rem; margin: auto; " *ngFor="let recipe of recipes; let i = index; let f = first;">
+          <div  *ngIf="i % 2 != 0 || f || i == 1">
+          <img class="card-img-top" src="assets/images/jerma.jpg" alt="Card image cap">
+          <div class="card-body">
+            <p class="card-text">{{recipe.RecipeName}}</p>
+          </div>
+          <a href="recipes/{{recipe.Id - 1}}" class="card-link">View full recipe</a>
+        </div>
+        </div>
+      </div>
+      <div class="col-sm" style="margin-top: 1rem;">
+        <div class="card text-white bg-dark" style="width: 20rem; margin: auto; " *ngFor="let recipe of recipes; let i = index; let f = first;">
+          <div  *ngIf="i % 2 == 0 && f != true">
+          <img class="card-img-top" src="assets/images/jerma.jpg" alt="Card image cap">
+          <div class="card-body">
+            <p class="card-text">{{recipe.RecipeName}}</p>
+          </div>
+          <a href="recipes/{{recipe.Id - 1}}" class="card-link">View full recipe</a>
+        </div>
+        </div>
+      </div>
     </div>
-    <a href="recipes/{{recipe.Id - 1}}" class="card-link">View full recipe</a>
   </div>
 </div>
-
