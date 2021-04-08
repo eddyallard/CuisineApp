@@ -17,7 +17,7 @@ public class IngredientService {
         return repos.findById(id);
     }
 
-    public List<Ingredient> findIngredientByRecipeId(Integer recipeId){
-        return repos.findIngredientByRecipeId(recipeId);
+    public List<Ingredient> findByIngredientNameSubStr(String ingredientNameSubStr){
+        return repos.findByIngredientNameSubStr(ingredientNameSubStr);
     }
 }

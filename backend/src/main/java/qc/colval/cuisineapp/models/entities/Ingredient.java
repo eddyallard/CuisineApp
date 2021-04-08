@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @NamedQueries({
-        @NamedQuery(name="Ingredient.findIngredientByRecipeId", query="SELECT i FROM Ingredient i, RecipeIngredient ri WHERE ri.recipeId =:recipeId")
+        @NamedQuery(name = "Ingredient.findByIngredientNameSubStr", query = "SELECT i FROM Ingredient i WHERE UPPER(substring(i.ingredientName, 1, length(:ingredientNameSubStr))) = UPPER(:ingredientNameSubStr)")
 })
 public class Ingredient implements Serializable {
     @Id
