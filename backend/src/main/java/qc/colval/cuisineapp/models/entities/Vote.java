@@ -14,18 +14,10 @@ import java.io.Serializable;
 @IdClass(VoteId.class)
 public class Vote implements Serializable {
     @Id
-    @ManyToOne
-    @JoinColumn(name = "UserId", referencedColumnName = "UserId")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private User user;
+    private Integer userId;
 
     @Id
-    @ManyToOne
-    @JoinColumn(name = "RecipeId", referencedColumnName = "RecipeId")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Recipe recipe;
+    private Integer recipeId;
 
     @Column(name = "VoteValue")
     private Integer voteValue;

@@ -1,10 +1,7 @@
 package qc.colval.cuisineapp.rest_controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import qc.colval.cuisineapp.mappers.EntityMapper;
 import qc.colval.cuisineapp.models.dto.combined.RecipeAndRecipeIngredientDTO;
 import qc.colval.cuisineapp.models.dto.RecipeDTO;
@@ -13,6 +10,8 @@ import qc.colval.cuisineapp.models.entities.Recipe;
 import qc.colval.cuisineapp.models.entities.RecipeIngredient;
 import qc.colval.cuisineapp.services.RecipeIngredientService;
 import qc.colval.cuisineapp.services.RecipeService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/recipe")
@@ -31,5 +30,14 @@ public class RecipeController {
             recipeIngredientDTO.setRecipeId(newRecipe.getRecipeId());
             recipeIngredientService.addRecipeIngredient(recipeIngredientMapper.dtoToEntity(recipeIngredientDTO));
         });
+    }
+
+    @GetMapping List<Recipe> allRecipes(){
+        return recipeService.findAll();
+    }
+
+    @GetMapping("/find")
+    public List<Recipe> findRecipesByNameSubStr(@RequestParam String recipeNameSubStr){
+        return recipeService.findByRecipeNameSubStr(recipeNameSubStr);
     }
 }

@@ -24,7 +24,6 @@ public class RecipeIngredientMapper implements EntityMapper<RecipeIngredient, Re
 
     @Override
     public RecipeIngredient dtoToEntity(RecipeIngredientDTO recipeIngredientDTO) {
-        System.out.println(ingredientService.findById(recipeIngredientDTO.getIngredientId()).get().getIngredientName());
         return new RecipeIngredient(
                 recipeIngredientDTO.getIngredientId(),
                 recipeIngredientDTO.getRecipeId(),

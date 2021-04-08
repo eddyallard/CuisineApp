@@ -17,7 +17,15 @@ public class RecipeService {
         return repos.findById(id);
     }
 
+    public List<Recipe> findAll(){
+        return repos.findAll();
+    }
+
     public Recipe addRecipe(Recipe recipe){
         return repos.save(recipe);
+    }
+
+    public List<Recipe> findByRecipeNameSubStr(String recipeNameSubStr){
+        return repos.findByRecipeNameSubStr(recipeNameSubStr);
     }
 }

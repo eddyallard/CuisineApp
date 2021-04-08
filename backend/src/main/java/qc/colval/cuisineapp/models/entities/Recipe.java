@@ -12,6 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@NamedQueries({
+                @NamedQuery(name = "Recipe.findByRecipeNameSubStr", query = "SELECT r FROM Recipe r WHERE UPPER(substring(r.recipeName, 1, length(:recipeNameSubStr))) = UPPER(:recipeNameSubStr)")
+})
 public class Recipe implements Serializable {
     @Id
     @Column(name = "RecipeId")
