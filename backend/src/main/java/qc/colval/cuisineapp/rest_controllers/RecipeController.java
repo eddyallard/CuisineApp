@@ -95,9 +95,16 @@ public class RecipeController {
         return null;
     }
 
+    //DELETE MAPPINGS
     @DeleteMapping("/ingredient/{recipeId}/{ingredientId}")
     public String deleteIngredient(@PathVariable Integer recipeId, @PathVariable Integer ingredientId){
         recipeIngredientService.deleteById(new RecipeIngredientId(ingredientId, recipeId));
         return "Ingredient Deleted Successfully";
+    }
+
+    @DeleteMapping("/ingredient/{recipeId}")
+    public String deleteRecipe(@PathVariable Integer recipeId){
+        recipeService.deleteById(recipeId);
+        return "Recipe Deleted Successfully";
     }
 }

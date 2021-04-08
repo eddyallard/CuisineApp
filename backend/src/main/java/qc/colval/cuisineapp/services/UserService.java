@@ -19,4 +19,8 @@ public class UserService {
         user.setUserId(null);
         return repos.save(user);
     }
+
+    public void deleteById(Integer id){
+        repos.deleteById(id);
+    }
 }

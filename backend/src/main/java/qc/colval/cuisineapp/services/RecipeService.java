@@ -28,4 +28,8 @@ public class RecipeService {
     public List<Recipe> findByRecipeNameSubStr(String recipeNameSubStr){
         return repos.findByRecipeNameSubStr(recipeNameSubStr);
     }
+
+    public void deleteById(Integer id){
+        repos.deleteById(id);
+    }
 }
