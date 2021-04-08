@@ -6,12 +6,14 @@ import qc.colval.cuisineapp.models.entities.Ingredient;
 import qc.colval.cuisineapp.models.entities.RecipeIngredient;
 import qc.colval.cuisineapp.repositories.IRecipeIngredientRepository;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class RecipeIngredientService {
     private final IRecipeIngredientRepository repos;
 
-    public RecipeIngredient addRecipeIngredient(RecipeIngredient recipeIngredient){
+    public RecipeIngredient save(RecipeIngredient recipeIngredient){
         return repos.save(recipeIngredient);
     }
 }

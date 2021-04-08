@@ -18,4 +18,8 @@ public class VoteService {
         return repos.findById(id);
     }
 
+    public Vote save(Vote vote){
+        return repos.save(vote);
+    }
+
 }

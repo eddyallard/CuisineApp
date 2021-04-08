@@ -15,7 +15,7 @@ public class UserService {
     public Optional<User> findById(Integer id){
         return repos.findById(id);
     }
-    public User addUser(User user){
+    public User save(User user){
         user.setUserId(null);
         return repos.save(user);
     }

@@ -28,7 +28,7 @@ public class RecipeController {
         Recipe newRecipe = recipeService.addRecipe(recipeMapper.dtoToEntity(dto.getRecipeDTO()));
         dto.getRecipeIngredientDTOs().forEach(recipeIngredientDTO -> {
             recipeIngredientDTO.setRecipeId(newRecipe.getRecipeId());
-            recipeIngredientService.addRecipeIngredient(recipeIngredientMapper.dtoToEntity(recipeIngredientDTO));
+            recipeIngredientService.save(recipeIngredientMapper.dtoToEntity(recipeIngredientDTO));
         });
     }
 
