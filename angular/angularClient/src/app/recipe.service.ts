@@ -16,4 +16,8 @@ export class RecipeService {
   getRecipeById(id: number): Recipe{
    return RECIPES[id];
   }
+
+  postRecipe(r: Recipe){
+    
+  }
 }
