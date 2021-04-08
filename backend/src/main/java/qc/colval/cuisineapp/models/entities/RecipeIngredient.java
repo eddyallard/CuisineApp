@@ -13,6 +13,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Data
 @IdClass(RecipeIngredientId.class)
+@NamedQueries({
+        @NamedQuery(name = "RecipeIngredient.findRecipeIngredientForRecipeId", query = "SELECT ri FROM RecipeIngredient ri WHERE ri.recipeId = :recipeId")
+})
 public class RecipeIngredient implements Serializable {
     @Id
     @NotNull

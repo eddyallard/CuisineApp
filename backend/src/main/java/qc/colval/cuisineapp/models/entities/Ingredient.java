@@ -13,6 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@NamedQueries({
+        @NamedQuery(name="Ingredient.findIngredientByRecipeId", query="SELECT i FROM Ingredient i, RecipeIngredient ri WHERE ri.recipeId =:recipeId")
+})
 public class Ingredient implements Serializable {
     @Id
     @Column(name = "IngredientId")
