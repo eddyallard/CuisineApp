@@ -12,6 +12,7 @@ import qc.colval.cuisineapp.services.IngredientService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/ingredient")
@@ -22,7 +23,7 @@ public class IngredientController {
 
     //GET MAPPING
     @GetMapping("/find")
-    public List<Ingredient> findIngredientsByNameSubStr(@RequestBody Map<String, String> ingredientNameSubStr){
-        return ingredientService.findByIngredientNameSubStr(ingredientNameSubStr.get("ingredientNameSubStr"));
+    public List<IngredientDTO> findIngredientsByNameSubStr(@RequestBody Map<String, String> ingredientNameSubStr){
+        return ingredientService.findByIngredientNameSubStr(ingredientNameSubStr.get("ingredientNameSubStr")).stream().map(ingredient -> ingredientMapper.entityToDto(ingredient)).collect(Collectors.toList());
     }
 }

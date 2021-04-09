@@ -61,7 +61,7 @@
 
 * **Data Params**
 
-    {"recipeNameSubStr": "Chicken"}
+    {"recipeNameSubStr": "your_recipe_substring"}
 
     _The input is not case sensitive._
 * **Success Response:**
@@ -165,10 +165,10 @@
 
   * **Code:** 200 <br />
     **Content:** `{
-    "recipeId": 12,
-    "recipeName": "Barbecue Chicken",
-    "recipeInstruction": "How to do Barbecue Chicken",
-    "authorId": 2
+    "userId": 1,
+    "userName": "Jean-Guy",
+    "email": "harrypotter@poudlard.ca",
+    "userPassword": "pass"
 }`
 
 ### Get a ingredients owned by a user with their quantity
@@ -208,5 +208,37 @@
             "measureType": "g."
         },
         "quantity": 650.0
+    }
+]`
+
+### Find an ingredient by name
+
+* **URL**
+
+    <_/api/ingredient/find_>
+
+* **Request Type**
+
+    `GET`
+
+* **Data Params**
+
+    {"ingredientNameSubStr": "your_ingredient_substring"}
+
+    _The input is not case sensitive._
+* **Success Response:**
+
+  * **Code:** 200 <br />
+
+    **Content:** `[
+    {
+        "ingredientId": 4,
+        "ingredientName": "chicken breast",
+        "measureType": "g."
+    },
+    {
+        "ingredientId": 34,
+        "ingredientName": "chicken broth",
+        "measureType": "unit"
     }
 ]`
