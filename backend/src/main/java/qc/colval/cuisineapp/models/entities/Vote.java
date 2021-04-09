@@ -13,6 +13,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Data
 @IdClass(VoteId.class)
+@NamedQueries({
+        @NamedQuery(name = "Vote.getVotesByRecipeId", query = "SELECT v FROM Vote v WHERE v.recipeId = :recipeId"),
+        @NamedQuery(name = "Vote.getVoteCountByRecipeId", query = "SELECT SUM(v.voteValue) FROM Vote v WHERE v.recipeId = :recipeId")
+})
 public class Vote implements Serializable {
     @Id
     @NotNull

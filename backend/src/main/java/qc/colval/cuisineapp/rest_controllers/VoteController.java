@@ -1,16 +1,16 @@
 package qc.colval.cuisineapp.rest_controllers;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import qc.colval.cuisineapp.mappers.EntityMapper;
 import qc.colval.cuisineapp.models.dto.VoteDTO;
 import qc.colval.cuisineapp.models.entities.Vote;
 import qc.colval.cuisineapp.models.entities.id_classes.VoteId;
 import qc.colval.cuisineapp.services.VoteService;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -19,6 +19,11 @@ import java.util.Optional;
 public class VoteController {
     private final VoteService voteService;
     private final EntityMapper<Vote, VoteDTO> voteMapper;
+
+    @GetMapping("/{recipeId}")
+    public List<Vote> getVotesByRecipe(@PathVariable Integer recipeId){
+        return voteService.getVotesByRecipeId(recipeId);
+    }
 
     @PostMapping
     public Vote postVote(@RequestBody VoteDTO voteDTO){

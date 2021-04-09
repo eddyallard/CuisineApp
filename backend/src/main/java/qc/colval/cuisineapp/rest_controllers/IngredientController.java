@@ -20,6 +20,7 @@ public class IngredientController {
     private final IngredientService ingredientService;
     private final EntityMapper<Ingredient, IngredientDTO> ingredientMapper;
 
+    //GET MAPPING
     @GetMapping("/find")
     public List<Ingredient> findIngredientsByNameSubStr(@RequestBody Map<String, String> ingredientNameSubStr){
         return ingredientService.findByIngredientNameSubStr(ingredientNameSubStr.get("ingredientNameSubStr"));

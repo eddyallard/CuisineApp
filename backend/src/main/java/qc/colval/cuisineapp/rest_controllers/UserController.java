@@ -3,14 +3,19 @@ package qc.colval.cuisineapp.rest_controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import qc.colval.cuisineapp.mappers.EntityMapper;
+import qc.colval.cuisineapp.models.dto.IngredientDTO;
 import qc.colval.cuisineapp.models.dto.UserDTO;
 import qc.colval.cuisineapp.models.dto.UserIngredientDTO;
+import qc.colval.cuisineapp.models.dto.combined.IngredientQuantityDTO;
+import qc.colval.cuisineapp.models.entities.Ingredient;
 import qc.colval.cuisineapp.models.entities.User;
 import qc.colval.cuisineapp.models.entities.UserIngredient;
 import qc.colval.cuisineapp.models.entities.id_classes.UserIngredientId;
+import qc.colval.cuisineapp.services.IngredientService;
 import qc.colval.cuisineapp.services.UserIngredientService;
 import qc.colval.cuisineapp.services.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +24,11 @@ import java.util.Map;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final IngredientService ingredientService;
     private final EntityMapper<User, UserDTO> userMapper;
     private final UserIngredientService userIngredientService;
     private final EntityMapper<UserIngredient, UserIngredientDTO> userIngredientMapper;
+    private final EntityMapper<Ingredient, IngredientDTO> ingredientMapper;
 
     //GET MAPPINGS
     @GetMapping("/{id}")
@@ -30,8 +37,14 @@ public class UserController {
     }
 
     @GetMapping("/ingredient/{id}")
-    public List<UserIngredient> findIngredientsByUser(@PathVariable Integer id){
-        return userIngredientService.findUserIngredientByUser(id);
+    public List<IngredientQuantityDTO> findIngredientsByUser(@PathVariable Integer id){
+        List<IngredientQuantityDTO> ingredientQuantities = new ArrayList<>();
+        userIngredientService.findUserIngredientByUser(id).forEach( recipeIngredient -> {
+            ingredientQuantities.add(new IngredientQuantityDTO(
+                    ingredientMapper.entityToDto(ingredientService.findById(recipeIngredient.getIngredientId()).orElse(null)),
+                    recipeIngredient.getQuantity()));
+        });
+        return ingredientQuantities;
     }
 
     //POST MAPPINGS
