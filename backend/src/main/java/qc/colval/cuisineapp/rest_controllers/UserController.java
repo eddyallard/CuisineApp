@@ -32,8 +32,8 @@ public class UserController {
 
     //GET MAPPINGS
     @GetMapping("/{id}")
-    public User getUserWithId(@PathVariable Integer id){
-        return userService.findById(id).orElse(null);
+    public UserDTO getUserWithId(@PathVariable Integer id){
+        return userMapper.entityToDto(userService.findById(id).orElse(null));
     }
 
     @GetMapping("/ingredient/{id}")

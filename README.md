@@ -150,3 +150,63 @@
         "voteCount": 1
     }
 ]`
+
+### Get a user with an Id
+
+* **URL**
+
+    <_/api/user/{id}_>
+
+* **Request Type**
+
+    `GET`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `{
+    "recipeId": 12,
+    "recipeName": "Barbecue Chicken",
+    "recipeInstruction": "How to do Barbecue Chicken",
+    "authorId": 2
+}`
+
+### Get a ingredients owned by a user with their quantity
+
+* **URL**
+
+    <_/api/user/ingredient/{id}_>
+
+* **Request Type**
+
+    `GET`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `[
+    {
+        "ingredientDTO": {
+            "ingredientId": 1,
+            "ingredientName": "flour",
+            "measureType": "g."
+        },
+        "quantity": 150.0
+    },
+    {
+        "ingredientDTO": {
+            "ingredientId": 2,
+            "ingredientName": "egg",
+            "measureType": "unit"
+        },
+        "quantity": 1.0
+    },
+    {
+        "ingredientDTO": {
+            "ingredientId": 4,
+            "ingredientName": "chicken breast",
+            "measureType": "g."
+        },
+        "quantity": 650.0
+    }
+]`
