@@ -10,7 +10,6 @@ import qc.colval.cuisineapp.models.entities.id_classes.VoteId;
 import qc.colval.cuisineapp.services.VoteService;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,18 +26,20 @@ public class VoteController {
     }
 
     @PostMapping
-    public Vote postVote(@RequestBody VoteDTO voteDTO){
+    public VoteDTO postVote(@RequestBody VoteDTO voteDTO){
         Vote vote = voteMapper.dtoToEntity(voteDTO);
         Optional<Vote> existing = voteService.findById(new VoteId(vote.getRecipeId(), vote.getUserId()));
-        //If the value of the vote changes
-        if (existing.isPresent() && !existing.get().getVoteValue().equals(vote.getVoteValue())){
-            Vote updatedVote = existing.get();
-            updatedVote.setVoteValue(vote.getVoteValue());
-            return voteService.save(updatedVote);
-        }
-        //Else if the vote didnt exist;
-        else if (existing.isEmpty()){
-            return voteService.save(vote);
+        if (voteDTO.getVoteValue() == 1 || voteDTO.getVoteValue() == -1) {
+            //If the value of the vote changes
+            if (existing.isPresent() && !existing.get().getVoteValue().equals(vote.getVoteValue())) {
+                Vote updatedVote = existing.get();
+                updatedVote.setVoteValue(vote.getVoteValue());
+                return voteMapper.entityToDto(voteService.save(updatedVote));
+            }
+            //Else if the vote didnt exist;
+            else if (existing.isEmpty()) {
+                return voteMapper.entityToDto(voteService.save(vote));
+            }
         }
         return null;
     }

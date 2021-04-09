@@ -79,14 +79,14 @@ public class RecipeController {
     }
     //POST MAPPINGS
     @PostMapping
-    public Recipe addRecipe(@RequestBody RecipeDTO recipeDTO){
+    public RecipeDTO addRecipe(@RequestBody RecipeDTO recipeDTO){
         recipeDTO.setRecipeId(null);
-        return recipeService.save(recipeMapper.dtoToEntity(recipeDTO));
+        return recipeMapper.entityToDto(recipeService.save(recipeMapper.dtoToEntity(recipeDTO)));
     }
 
     @PostMapping("/ingredient")
-    public RecipeIngredient addRecipeIngredient(@RequestBody RecipeIngredientDTO recipeIngredientDTO){
-        return recipeIngredientService.save(recipeIngredientMapper.dtoToEntity(recipeIngredientDTO));
+    public RecipeIngredientDTO addRecipeIngredient(@RequestBody RecipeIngredientDTO recipeIngredientDTO){
+        return recipeIngredientMapper.entityToDto(recipeIngredientService.save(recipeIngredientMapper.dtoToEntity(recipeIngredientDTO)));
     }
 
     //PUT MAPPINGS

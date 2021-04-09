@@ -49,13 +49,13 @@ public class UserController {
 
     //POST MAPPINGS
     @PostMapping
-    public User addUser(@RequestBody UserDTO userDTO){
-        return userService.save(userMapper.dtoToEntity(userDTO));
+    public UserDTO addUser(@RequestBody UserDTO userDTO){
+        return userMapper.entityToDto(userService.save(userMapper.dtoToEntity(userDTO)));
     }
 
     @PostMapping("/ingredient")
-    public UserIngredient addUserIngredient(@RequestBody UserIngredientDTO userIngredientDTO){
-        return userIngredientService.save(userIngredientMapper.dtoToEntity(userIngredientDTO));
+    public UserIngredientDTO addUserIngredient(@RequestBody UserIngredientDTO userIngredientDTO){
+        return userIngredientMapper.entityToDto(userIngredientService.save(userIngredientMapper.dtoToEntity(userIngredientDTO)));
     }
 
     //PUT MAPPINGS
