@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/recipe")
@@ -38,17 +39,17 @@ public class RecipeController {
 
     //GET MAPPINGS
     @GetMapping("/{id}")
-    public Recipe getRecipeWithId(@PathVariable Integer id){
-        return recipeService.findById(id).orElse(null);
+    public RecipeDTO getRecipeWithId(@PathVariable Integer id){
+        return recipeMapper.entityToDto(recipeService.findById(id).orElse(null));
     }
 
-    @GetMapping List<Recipe> allRecipes(){
-        return recipeService.findAll();
+    @GetMapping List<RecipeDTO> allRecipes(){
+        return recipeService.findAll().stream().map(recipeMapper::entityToDto).collect(Collectors.toList());
     }
 
     @GetMapping("/find")
-    public List<Recipe> findRecipesByNameSubStr(@RequestBody Map<String, String> recipeNameSubStr){
-        return recipeService.findByRecipeNameSubStr(recipeNameSubStr.get("recipeNameSubStr"));
+    public List<RecipeDTO> findRecipesByNameSubStr(@RequestBody Map<String, String> recipeNameSubStr){
+        return recipeService.findByRecipeNameSubStr(recipeNameSubStr.get("recipeNameSubStr")).stream().map(recipeMapper::entityToDto).collect(Collectors.toList());
     }
 
     @GetMapping("/ingredient/{recipeId}")
