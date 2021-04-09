@@ -591,5 +591,70 @@
     }`
 
     _Note, if nothing is returned, your UserIngredient was not found._
+### Delete user ingredient
 
+* **URL**
+
+    <_/api/user/ingredient/{userId}/{ingredientId}_>
+
+* **Request Type**
+
+    `DELETE`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+
+    **Content:**    
+    `User Ingredient Deleted Successfully`
+
+### Delete user
+
+* **URL**
+
+    <_/api/user/ingredient/{userId}_>
+
+* **Request Type**
+
+    `DELETE`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+
+    **Content:**    
+    `User Deleted Successfully`
+   
+### Delete recipe ingredient
+
+* **URL**
+
+    <_/api/recipe/ingredient/{recipeId}/{ingredientId}_>
+
+* **Request Type**
+
+    `DELETE`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+
+    **Content:**    
+    `Recipe Ingredient Deleted Successfully`
     
+### Delete recipe
+
+* **URL**
+
+    <_/api/recipe/ingredient/{recipeId}_>
+
+* **Request Type**
+
+    `DELETE`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+
+    **Content:**    
+    `Recipe Deleted Successfully`
