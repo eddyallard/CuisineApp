@@ -4,6 +4,7 @@ import {RecipeService} from '../recipe.service';
 import {Recipe} from '../interfaces/recipe';
 import {Ingredient} from '../interfaces/Ingredient';
 import {IngredientService} from '../ingredient.service'
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -15,14 +16,17 @@ export class NewRecipeComponent implements OnInit {
 
   model = new Recipe(69420, '', '', []);
   ingredients : Ingredient[] = [];
+  ingredientList : Ingredient[] = [];
   filteredIngredient : Ingredient[];
   searchQuerry : string = "";
   ingredientView = false;
+
+  text = new FormControl('');
   
   constructor(private recipeService : RecipeService, private ingredientService : IngredientService) { }
 
   OnSearchChange() : void{
-    this.filteredIngredient = this.ingredientService.searchIngredientBySubStr(this.searchQuerry)
+    this.filteredIngredient = this.ingredientService.searchIngredientBySubStr(this.text.value)
   }
 
   WriteRecipe(): void {
@@ -31,6 +35,11 @@ export class NewRecipeComponent implements OnInit {
   ngOnInit(): void {
     this.ingredients = this.ingredientService.getIngredient();
     this.filteredIngredient = this.ingredients;
+  }
+
+  AddIngredient(ing: Ingredient): void {
+      this.ingredientList.push(ing);
+      this.text.setValue("");
   }
 
 }

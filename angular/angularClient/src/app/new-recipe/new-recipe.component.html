@@ -7,15 +7,14 @@
     <div class="form-group">
         <label for="ingredientAdd">Ingredients</label>
         <mat-form-field>
-            <input type="text" placeholder="Enter ingredient" matInput
-                 [matAutocomplete]="auto" (input)="OnSearchChange()"  [(ngModel)]="searchQuerry">
+            <input [formControl]="text" type="text" placeholder="Enter ingredient" matInput
+                 [matAutocomplete]="auto" (input)="OnSearchChange()">
                <mat-autocomplete #auto="matAutocomplete">
-                 <mat-option *ngFor="let ingredient of filteredIngredient" [value]="ingredient.IngredientName">
-                   {{ingredient.IngredientName}}
-                </mat-option>
+                 <mat-option *ngFor="let ingredient of filteredIngredient" [value]="ingredient.IngredientName" (click)="AddIngredient(ingredient)">
+                   {{ingredient.IngredientName}}              
+                  </mat-option>
             </mat-autocomplete>
          </mat-form-field>
-         
     </div>
     <div class="form-group">
       <label for="exampleFormControlTextarea1">Instructions</label>
@@ -25,9 +24,9 @@
     <button type="submit" class="btn btn-primary" (click)="WriteRecipe()">Submit</button>
   </form>
 
-<h1>{{model.RecipeName}}</h1>
-
 <h2>Ingredients</h2>
-<ul>
-
+<ul class="list-group">
+<li class="list-group-item" *ngFor="let ingredient of ingredientList" >
+  {{ingredient.IngredientName}}
+</li>
 </ul>
