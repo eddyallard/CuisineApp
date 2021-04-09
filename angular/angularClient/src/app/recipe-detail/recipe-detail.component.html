@@ -1,10 +1,13 @@
-<span><h1>{{recipe.RecipeName}}</h1></span> 
+<span><h1 class="h1">{{recipe.RecipeName}}</h1></span> 
 
-<p>Ingredient</p>
-<ul class="list-group">
+<ul class="list-group" style="margin: auto; max-width: 50%;">
+  <h3 class="h3">Ingredient</h3>
     <li *ngFor="let ingredient of recipe.Ingredients">
-      <span class="list-group-item">{{ingredient}}</span>
+      <span class="list-group-item list-group-item-primary">{{ingredient}}</span>
     </li>
   </ul>
 
-<p>{{recipe.Instruction}}</p>
+<div style="margin: auto; max-width: 50%;" >
+  <H1 class="h1">Instruction</H1>
+  <p>{{recipe.Instruction}}</p>
+</div>
