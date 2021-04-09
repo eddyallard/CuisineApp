@@ -242,3 +242,24 @@
         "measureType": "unit"
     }
 ]`
+
+### Get votes for a recipe
+
+* **URL**
+
+    <_/api/user/vote/{recipeId}_>
+
+* **Request Type**
+
+    `GET`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `[
+    {
+        "userId": 2,
+        "recipeId": 7,
+        "voteValue": 1
+    }
+]`

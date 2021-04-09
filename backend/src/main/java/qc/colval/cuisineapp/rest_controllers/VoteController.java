@@ -12,6 +12,7 @@ import qc.colval.cuisineapp.services.VoteService;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/vote")
@@ -21,8 +22,8 @@ public class VoteController {
     private final EntityMapper<Vote, VoteDTO> voteMapper;
 
     @GetMapping("/{recipeId}")
-    public List<Vote> getVotesByRecipe(@PathVariable Integer recipeId){
-        return voteService.getVotesByRecipeId(recipeId);
+    public List<VoteDTO> getVotesByRecipe(@PathVariable Integer recipeId){
+        return voteService.getVotesByRecipeId(recipeId).stream().map(vote -> voteMapper.entityToDto(vote)).collect(Collectors.toList());
     }
 
     @PostMapping
