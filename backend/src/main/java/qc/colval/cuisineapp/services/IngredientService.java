@@ -20,4 +20,8 @@ public class IngredientService {
     public List<Ingredient> findByIngredientNameSubStr(String ingredientNameSubStr){
         return repos.findByIngredientNameSubStr(ingredientNameSubStr);
     }
+
+    public List<Ingredient> findAll(){
+        return repos.findAll();
+    }
 }

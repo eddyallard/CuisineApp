@@ -91,21 +91,21 @@ public class RecipeController {
 
     //PUT MAPPINGS
     @PutMapping ("/name/{id}")
-    public Recipe editRecipeName(@PathVariable Integer id, @RequestBody Map<String, String> newName){
+    public RecipeDTO editRecipeName(@PathVariable Integer id, @RequestBody Map<String, String> newName){
         Recipe recipe = recipeService.findById(id).orElse(null);
         if (recipe != null) {
             recipe.setRecipeName(newName.get("newName"));
-            return recipeService.save(recipe);
+            return recipeMapper.entityToDto(recipeService.save(recipe));
         }
         return null;
     }
 
     @PutMapping ("/instruction/{id}")
-    public Recipe editRecipeInstruction(@PathVariable Integer id, @RequestBody Map<String, String> newInstruction){
+    public RecipeDTO editRecipeInstruction(@PathVariable Integer id, @RequestBody Map<String, String> newInstruction){
         Recipe recipe = recipeService.findById(id).orElse(null);
         if (recipe != null) {
             recipe.setRecipeInstruction(newInstruction.get("newInstruction"));
-            return recipeService.save(recipe);
+            return recipeMapper.entityToDto(recipeService.save(recipe));
         }
         return null;
     }
@@ -128,7 +128,7 @@ public class RecipeController {
     @DeleteMapping("/ingredient/{recipeId}/{ingredientId}")
     public String deleteIngredient(@PathVariable Integer recipeId, @PathVariable Integer ingredientId){
         recipeIngredientService.deleteById(new RecipeIngredientId(ingredientId, recipeId));
-        return "Ingredient Deleted Successfully";
+        return "Recipe Ingredient Deleted Successfully";
     }
 
     @DeleteMapping("/ingredient/{recipeId}")

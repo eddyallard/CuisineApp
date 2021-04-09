@@ -60,17 +60,17 @@ public class UserController {
 
     //PUT MAPPINGS
     @PutMapping("/password/{id}")
-    public User updateUserPassword(@PathVariable Integer id, @RequestBody Map<String, String> newPassword){
+    public UserDTO updateUserPassword(@PathVariable Integer id, @RequestBody Map<String, String> newPassword){
         User user = userService.findById(id).orElse(null);
         if (user != null){
             user.setUserPassword(newPassword.get("newPassword"));
-            userService.save(user);
+            userMapper.entityToDto(userService.save(user));
         }
         return null;
     }
 
     @PutMapping("/ingredient")
-    public UserIngredient userIngredient(@RequestBody UserIngredientDTO userIngredientDTO){
+    public UserIngredientDTO userIngredient(@RequestBody UserIngredientDTO userIngredientDTO){
         UserIngredient userIngredient = userIngredientService.findById(
                 new UserIngredientId(
                         userIngredientDTO.getUserId(),
@@ -78,7 +78,7 @@ public class UserController {
                 .orElse(null);
         if (userIngredient != null){
             userIngredient.setQuantity(userIngredientDTO.getQuantity());
-            return userIngredientService.save(userIngredient);
+            return userIngredientMapper.entityToDto(userIngredientService.save(userIngredient));
         }
         return null;
     }
@@ -87,12 +87,12 @@ public class UserController {
     @DeleteMapping("/ingredient/{userId}/{ingredientId}")
     public String deleteUserIngredient(@PathVariable Integer userId, @PathVariable Integer ingredientId){
         userIngredientService.deleteById(new UserIngredientId(userId, ingredientId));
-        return "Ingredient Deleted Successfully";
+        return "User Ingredient Deleted Successfully";
     }
 
     @DeleteMapping("/ingredient/{userId}")
     public String deleteUser(@PathVariable Integer userId){
         userService.deleteById(userId);
-        return "Ingredient User Successfully";
+        return "User Successfully";
     }
 }

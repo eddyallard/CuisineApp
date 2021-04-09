@@ -24,6 +24,11 @@ public class IngredientController {
     //GET MAPPING
     @GetMapping("/find")
     public List<IngredientDTO> findIngredientsByNameSubStr(@RequestBody Map<String, String> ingredientNameSubStr){
-        return ingredientService.findByIngredientNameSubStr(ingredientNameSubStr.get("ingredientNameSubStr")).stream().map(ingredient -> ingredientMapper.entityToDto(ingredient)).collect(Collectors.toList());
+        return ingredientService.findByIngredientNameSubStr(ingredientNameSubStr.get("ingredientNameSubStr")).stream().map(ingredientMapper::entityToDto).collect(Collectors.toList());
+    }
+
+    @GetMapping
+    public List<IngredientDTO> findAllIngredients(){
+        return ingredientService.findAll().stream().map(ingredientMapper::entityToDto).collect(Collectors.toList());
     }
 }
