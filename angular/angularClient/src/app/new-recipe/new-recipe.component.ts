@@ -19,7 +19,7 @@ export class NewRecipeComponent implements OnInit {
   ingredientList : Ingredient[] = [];
   filteredIngredient : Ingredient[];
   searchQuerry : string = "";
-  ingredientView = false;
+  quantitiesList: number[] = [];
 
   text = new FormControl('');
   
@@ -40,6 +40,11 @@ export class NewRecipeComponent implements OnInit {
   AddIngredient(ing: Ingredient): void {
       this.ingredientList.push(ing);
       this.text.setValue("");
+  }
+
+  DeleteIngredient(index: number) : void{
+    this.ingredientList.splice(index, 1)
+    this.quantitiesList.splice(index, 1)
   }
 
 }

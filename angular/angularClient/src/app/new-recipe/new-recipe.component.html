@@ -26,15 +26,14 @@
 <div style="max-width: 25%;">
   <h2>Ingredients</h2>
   <ul class="list-group">
-  <li class="list-group-item input-group" *ngFor="let ingredient of ingredientList" style="display: inline-block;" >
+  <li class="list-group-item input-group" *ngFor="let ingredient of ingredientList; let i = index" style="display: inline-block;" >
     <div class="input-group mb-3">
-      <input type="number" class="form-control" placeholder="Amount" aria-label="Amount" aria-describedby="basic-addon2" value="0">
+      <input type="number" class="form-control" placeholder="Amount" aria-label="Amount" aria-describedby="basic-addon2" value="0" [(ngModel)]="quantitiesList[i]">
       <div class="input-group-append">
         <span class="input-group-text">{{ingredient.measureType}} of {{ingredient.IngredientName}}</span>
-        <button type="button" class="btn btn-danger">Remove</button>
+        <button type="button" class="btn btn-danger" (click)="DeleteIngredient(i)">Remove</button>
       </div>
     </div>
   </li>
   </ul>
 </div>
-

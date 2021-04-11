@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { element } from 'protractor';
 import {Ingredient} from './interfaces/Ingredient'
 import {INGREDIENTS} from './Mock/MockIngredient'
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
  
 @Injectable({
   providedIn: 'root'
@@ -9,8 +12,14 @@ import {INGREDIENTS} from './Mock/MockIngredient'
 export class IngredientService {
 
   private filtered : Ingredient[];
+  private heroesUrl = 'http://localhost:8080/api/ingredient'; 
+
   getIngredient(): Ingredient[] {
     return INGREDIENTS;
+  }
+
+  getHttpIngredient(): Observable<Ingredient[]> {
+    return this.http.get<Ingredient[]>(this.heroesUrl)
   }
 
   searchIngredientBySubStr(subStr : string) : Ingredient[]{
@@ -23,7 +32,7 @@ export class IngredientService {
     return this.filtered;
   }
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   
 }
