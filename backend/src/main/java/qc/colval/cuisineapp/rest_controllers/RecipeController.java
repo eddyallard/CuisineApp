@@ -1,7 +1,7 @@
 package qc.colval.cuisineapp.rest_controllers;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import qc.colval.cuisineapp.mappers.EntityMapper;
 import qc.colval.cuisineapp.models.dto.IngredientDTO;
@@ -18,11 +18,10 @@ import qc.colval.cuisineapp.services.RecipeIngredientService;
 import qc.colval.cuisineapp.services.RecipeService;
 import qc.colval.cuisineapp.services.VoteService;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -39,32 +38,38 @@ public class RecipeController {
 
     //GET MAPPINGS
     @GetMapping("/{id}")
-    public RecipeDTO getRecipeWithId(@PathVariable Integer id){
-        return recipeMapper.entityToDto(recipeService.findById(id).orElse(null));
+    public ResponseEntity<RecipeDTO> getRecipeWithId(@PathVariable Integer id){
+        Optional<Recipe> recipe = recipeService.findById(id);
+        return recipe.map(value -> ResponseEntity.ok(recipeMapper.entityToDto(value)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping List<RecipeDTO> allRecipes(){
-        return recipeService.findAll().stream().map(recipeMapper::entityToDto).collect(Collectors.toList());
+    @GetMapping ResponseEntity<List<RecipeDTO>> allRecipes(){
+        return ResponseEntity.ok(recipeService.findAll()
+                .stream().map(recipeMapper::entityToDto)
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/find")
-    public List<RecipeDTO> findRecipesByNameSubStr(@RequestBody Map<String, String> recipeNameSubStr){
-        return recipeService.findByRecipeNameSubStr(recipeNameSubStr.get("recipeNameSubStr")).stream().map(recipeMapper::entityToDto).collect(Collectors.toList());
+    public ResponseEntity<List<RecipeDTO>> findRecipesByNameSubStr(@RequestParam String recipeNameSubStr){
+        return ResponseEntity.ok(recipeService.findByRecipeNameSubStr(recipeNameSubStr)
+                .stream().map(recipeMapper::entityToDto)
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/ingredient/{recipeId}")
-    public List<IngredientQuantityDTO> findIngredientsByRecipe(@PathVariable Integer recipeId){
+    public ResponseEntity<List<IngredientQuantityDTO>> findIngredientsByRecipe(@PathVariable Integer recipeId){
         List<IngredientQuantityDTO> ingredientQuantities = new ArrayList<>();
         recipeIngredientService.findRecipeIngredientForRecipeId(recipeId).forEach( recipeIngredient -> {
             ingredientQuantities.add(new IngredientQuantityDTO(
                     ingredientMapper.entityToDto(ingredientService.findById(recipeIngredient.getIngredientId()).orElse(null)),
                     recipeIngredient.getQuantity()));
         });
-        return ingredientQuantities;
+        return ResponseEntity.ok(ingredientQuantities);
     }
 
     @GetMapping("/sorted_by_vote_with_vote_count")
-    public List<RecipeVoteCountDTO> findAllRecipesSortedByVoteWithVoteCount(){
+    public ResponseEntity<List<RecipeVoteCountDTO>> findAllRecipesSortedByVoteWithVoteCount(){
         List<RecipeVoteCountDTO> recipes = new ArrayList<>();
         //We want to reverse descending that's why we negate the result.
         Comparator<RecipeVoteCountDTO> compareByVoteCount = (o1, o2) -> -(o1.getVoteCount().compareTo(o2.getVoteCount()));
@@ -75,65 +80,62 @@ public class RecipeController {
 
         });
         recipes.sort(compareByVoteCount);
-        return recipes;
+        return ResponseEntity.ok(recipes);
     }
     //POST MAPPINGS
     @PostMapping
-    public RecipeDTO addRecipe(@RequestBody RecipeDTO recipeDTO){
+    public ResponseEntity<RecipeDTO> addRecipe(@RequestBody @Valid RecipeDTO recipeDTO){
         recipeDTO.setRecipeId(null);
-        return recipeMapper.entityToDto(recipeService.save(recipeMapper.dtoToEntity(recipeDTO)));
+        Recipe saved = recipeService.save(recipeMapper.dtoToEntity(recipeDTO));
+        return ResponseEntity.created(URI.create(saved.getRecipeId().toString()))
+                .body(recipeMapper.entityToDto(saved));
     }
 
     @PostMapping("/ingredient")
-    public RecipeIngredientDTO addRecipeIngredient(@RequestBody RecipeIngredientDTO recipeIngredientDTO){
-        return recipeIngredientMapper.entityToDto(recipeIngredientService.save(recipeIngredientMapper.dtoToEntity(recipeIngredientDTO)));
+    public ResponseEntity<RecipeIngredientDTO> addRecipeIngredient(@RequestBody @Valid RecipeIngredientDTO recipeIngredientDTO){
+        RecipeIngredient saved = recipeIngredientService.save(recipeIngredientMapper.dtoToEntity(recipeIngredientDTO));
+        return ResponseEntity.created(URI.create(saved.getIngredientId().toString() + '-' + saved.getRecipeId().toString()))
+                .body(recipeIngredientMapper.entityToDto(saved));
     }
 
     //PUT MAPPINGS
     @PutMapping ("/name/{id}")
-    public RecipeDTO editRecipeName(@PathVariable Integer id, @RequestBody Map<String, String> newName){
-        Recipe recipe = recipeService.findById(id).orElse(null);
-        if (recipe != null) {
-            recipe.setRecipeName(newName.get("newName"));
-            return recipeMapper.entityToDto(recipeService.save(recipe));
-        }
-        return null;
+    public ResponseEntity<RecipeDTO> editRecipeName(@PathVariable Integer id, @RequestBody Map<String, String> newName){
+        Optional<Recipe> recipe = recipeService.findById(id);
+        recipe.ifPresent(value -> value.setRecipeName(newName.get("newName")));
+        return recipe.map(value -> ResponseEntity.ok(recipeMapper.entityToDto(recipeService.save(value))))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping ("/instruction/{id}")
-    public RecipeDTO editRecipeInstruction(@PathVariable Integer id, @RequestBody Map<String, String> newInstruction){
-        Recipe recipe = recipeService.findById(id).orElse(null);
-        if (recipe != null) {
-            recipe.setRecipeInstruction(newInstruction.get("newInstruction"));
-            return recipeMapper.entityToDto(recipeService.save(recipe));
-        }
-        return null;
+    public ResponseEntity<RecipeDTO> editRecipeInstruction(@PathVariable Integer id, @RequestBody Map<String, String> newInstruction){
+        Optional<Recipe> recipe = recipeService.findById(id);
+        recipe.ifPresent(value -> value.setRecipeInstruction(newInstruction.get("newInstruction")));
+        return recipe.map(value -> ResponseEntity.ok(recipeMapper.entityToDto(recipeService.save(value))))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/ingredient/")
-    public RecipeIngredient editIngredientQuantity(@RequestBody RecipeIngredientDTO recipeIngredientDTO){
-        RecipeIngredient recipeIngredient = recipeIngredientService.findById(
+    public ResponseEntity<RecipeIngredientDTO> editIngredientQuantity(@RequestBody RecipeIngredientDTO recipeIngredientDTO){
+        Optional<RecipeIngredient> recipeIngredient = recipeIngredientService.findById(
                 new RecipeIngredientId(
                         recipeIngredientDTO.getIngredientId(),
-                        recipeIngredientDTO.getRecipeId()))
-                .orElse(null);
-        if (recipeIngredient != null){
-            recipeIngredient.setQuantity(recipeIngredientDTO.getQuantity());
-            return recipeIngredientService.save(recipeIngredient);
-        }
-        return null;
+                        recipeIngredientDTO.getRecipeId()));
+        recipeIngredient.ifPresent(value -> value.setQuantity(recipeIngredientDTO.getQuantity()));
+        return recipeIngredient.map(value -> ResponseEntity.ok(recipeIngredientMapper.entityToDto(recipeIngredientService.save(value))))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     //DELETE MAPPINGS
     @DeleteMapping("/ingredient/{recipeId}/{ingredientId}")
-    public String deleteIngredient(@PathVariable Integer recipeId, @PathVariable Integer ingredientId){
+    public ResponseEntity<String> deleteIngredient(@PathVariable Integer recipeId, @PathVariable Integer ingredientId){
         recipeIngredientService.deleteById(new RecipeIngredientId(ingredientId, recipeId));
-        return "Recipe Ingredient Deleted Successfully";
+        return ResponseEntity.ok("Recipe Ingredient Deleted Successfully");
     }
 
     @DeleteMapping("/ingredient/{recipeId}")
-    public String deleteRecipe(@PathVariable Integer recipeId){
+    public ResponseEntity<String> deleteRecipe(@PathVariable Integer recipeId){
         recipeService.deleteById(recipeId);
-        return "Recipe Deleted Successfully";
+        return ResponseEntity.ok("Recipe Deleted Successfully");
     }
 }
