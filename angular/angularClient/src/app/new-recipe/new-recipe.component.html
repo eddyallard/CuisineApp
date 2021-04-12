@@ -10,8 +10,8 @@
             <input [formControl]="text" type="text" placeholder="Enter ingredient" matInput
                  [matAutocomplete]="auto" (input)="OnSearchChange()">
                <mat-autocomplete #auto="matAutocomplete">
-                 <mat-option *ngFor="let ingredient of filteredIngredient" [value]="ingredient.IngredientName" (click)="AddIngredient(ingredient)">
-                   {{ingredient.IngredientName}}              
+                 <mat-option *ngFor="let ingredient of filteredIngredient" [value]="ingredient.ingredientName" (click)="AddIngredient(ingredient)">
+                   {{ingredient.ingredientName}}              
                   </mat-option>
             </mat-autocomplete>
          </mat-form-field>
@@ -21,7 +21,7 @@
       <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required
       [(ngModel)]="model.Instruction" name="Instructions">></textarea>
     </div>
-    <button type="submit" class="btn btn-primary" (click)="WriteRecipe()">Submit</button>
+    <button type="submit" class="btn btn-primary" (click)="PostRecipe()">Submit</button>
   </form>
 <div style="max-width: 25%;">
   <h2>Ingredients</h2>
@@ -30,7 +30,7 @@
     <div class="input-group mb-3">
       <input type="number" class="form-control" placeholder="Amount" aria-label="Amount" aria-describedby="basic-addon2" value="0" [(ngModel)]="quantitiesList[i]">
       <div class="input-group-append">
-        <span class="input-group-text">{{ingredient.measureType}} of {{ingredient.IngredientName}}</span>
+        <span class="input-group-text">{{ingredient.measureType}} of {{ingredient.ingredientName}}</span>
         <button type="button" class="btn btn-danger" (click)="DeleteIngredient(i)">Remove</button>
       </div>
     </div>

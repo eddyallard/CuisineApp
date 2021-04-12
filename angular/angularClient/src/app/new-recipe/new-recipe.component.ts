@@ -18,23 +18,33 @@ export class NewRecipeComponent implements OnInit {
   ingredients : Ingredient[] = [];
   ingredientList : Ingredient[] = [];
   filteredIngredient : Ingredient[];
-  searchQuerry : string = "";
   quantitiesList: number[] = [];
 
   text = new FormControl('');
-  
+
   constructor(private recipeService : RecipeService, private ingredientService : IngredientService) { }
 
-  OnSearchChange() : void{
-    this.filteredIngredient = this.ingredientService.searchIngredientBySubStr(this.text.value)
+  ngOnInit(): void {
+    this.getIngredient();
   }
 
-  WriteRecipe(): void {
-    this.recipeService.postRecipe(this.model);
+  getIngredient(): void {
+    this.ingredientService.getHttpIngredient().subscribe((data: Ingredient[])=>{
+      console.log(data);
+      this.ingredients = data;
+    })  
   }
-  ngOnInit(): void {
-    this.ingredients = this.ingredientService.getIngredient();
+
+  OnSearchChange() : void{
     this.filteredIngredient = this.ingredients;
+    this.ingredientService.searchIngredientBySubStr(this.text.value).subscribe((data: Ingredient[])=>{
+      console.log(data);
+      this.filteredIngredient = data;
+    })  
+  }
+
+  PostRecipe(): void {
+    this.recipeService.postRecipe(this.model,this.ingredientList,this.quantitiesList, 2);
   }
 
   AddIngredient(ing: Ingredient): void {
@@ -44,7 +54,7 @@ export class NewRecipeComponent implements OnInit {
 
   DeleteIngredient(index: number) : void{
     this.ingredientList.splice(index, 1)
-    this.quantitiesList.splice(index, 1)
+    this.quantitiesList.splice(index,)
   }
 
 }

@@ -1,12 +1,12 @@
 export class Ingredient {
     constructor(
-        public Id: number,
-        public IngredientName: string,
+        public ingredientId: number,
+        public ingredientName: string,
         public measureType: MeasureType
       ) {  }
     }
  export enum MeasureType {
     ml = "ml.",
     g = "g.",
-    unit = "unit."
+    unit = "unit"
 }
