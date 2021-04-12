@@ -94,7 +94,7 @@ public class RecipeController {
     @PostMapping("/ingredient")
     public ResponseEntity<RecipeIngredientDTO> addRecipeIngredient(@RequestBody @Valid RecipeIngredientDTO recipeIngredientDTO){
         RecipeIngredient saved = recipeIngredientService.save(recipeIngredientMapper.dtoToEntity(recipeIngredientDTO));
-        return ResponseEntity.created(URI.create(saved.getIngredientId().toString() + '-' + saved.getRecipeId().toString()))
+        return ResponseEntity.created(URI.create(saved.getIngredientId().toString() + '_' + saved.getRecipeId().toString()))
                 .body(recipeIngredientMapper.entityToDto(saved));
     }
 
