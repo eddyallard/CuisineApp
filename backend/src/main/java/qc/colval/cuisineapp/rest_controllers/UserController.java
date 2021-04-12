@@ -1,6 +1,8 @@
 package qc.colval.cuisineapp.rest_controllers;
 
 import lombok.AllArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import qc.colval.cuisineapp.mappers.EntityMapper;
 import qc.colval.cuisineapp.models.dto.IngredientDTO;
@@ -15,9 +17,11 @@ import qc.colval.cuisineapp.services.IngredientService;
 import qc.colval.cuisineapp.services.UserIngredientService;
 import qc.colval.cuisineapp.services.UserService;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
@@ -32,67 +36,64 @@ public class UserController {
 
     //GET MAPPINGS
     @GetMapping("/{id}")
-    public UserDTO getUserWithId(@PathVariable Integer id){
-        return userMapper.entityToDto(userService.findById(id).orElse(null));
+    public ResponseEntity<UserDTO> getUserWithId(@PathVariable Integer id){
+        Optional<User> user = userService.findById(id);
+        return user.map(value -> ResponseEntity.ok(userMapper.entityToDto(value)))
+                .orElseGet(()->ResponseEntity.notFound().build());
     }
 
     @GetMapping("/ingredient/{id}")
-    public List<IngredientQuantityDTO> findIngredientsByUser(@PathVariable Integer id){
+    public ResponseEntity<List<IngredientQuantityDTO>> findIngredientsByUser(@PathVariable Integer id){
         List<IngredientQuantityDTO> ingredientQuantities = new ArrayList<>();
         userIngredientService.findUserIngredientByUser(id).forEach( recipeIngredient -> {
             ingredientQuantities.add(new IngredientQuantityDTO(
                     ingredientMapper.entityToDto(ingredientService.findById(recipeIngredient.getIngredientId()).orElse(null)),
                     recipeIngredient.getQuantity()));
         });
-        return ingredientQuantities;
+        return ResponseEntity.ok(ingredientQuantities);
     }
 
     //POST MAPPINGS
     @PostMapping
-    public UserDTO addUser(@RequestBody UserDTO userDTO){
-        return userMapper.entityToDto(userService.save(userMapper.dtoToEntity(userDTO)));
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO){
+        User saved = userService.save(userMapper.dtoToEntity(userDTO));
+        return ResponseEntity.created(URI.create(saved.getUserId().toString())).body(userMapper.entityToDto(saved));
     }
 
     @PostMapping("/ingredient")
-    public UserIngredientDTO addUserIngredient(@RequestBody UserIngredientDTO userIngredientDTO){
-        return userIngredientMapper.entityToDto(userIngredientService.save(userIngredientMapper.dtoToEntity(userIngredientDTO)));
+    public ResponseEntity<UserIngredientDTO> addUserIngredient(@RequestBody UserIngredientDTO userIngredientDTO){
+        UserIngredient saved = userIngredientService.save(userIngredientMapper.dtoToEntity(userIngredientDTO));
+        return ResponseEntity.created(URI.create(saved.getIngredientId().toString() + '_' + saved.getUserId().toString())).body(userIngredientMapper.entityToDto(saved));
     }
 
     //PUT MAPPINGS
     @PutMapping("/password/{id}")
-    public UserDTO updateUserPassword(@PathVariable Integer id, @RequestBody Map<String, String> newPassword){
-        User user = userService.findById(id).orElse(null);
-        if (user != null){
-            user.setUserPassword(newPassword.get("newPassword"));
-            userMapper.entityToDto(userService.save(user));
-        }
-        return null;
+    public ResponseEntity<UserDTO> updateUserPassword(@PathVariable Integer id, @RequestBody Map<String, String> newPassword){
+        Optional<User> user = userService.findById(id);
+        user.ifPresent(value -> value.setUserPassword(newPassword.get("newPassword")));
+        return user.map(value -> ResponseEntity.ok(userMapper.entityToDto(userService.save(value))))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/ingredient")
-    public UserIngredientDTO userIngredient(@RequestBody UserIngredientDTO userIngredientDTO){
-        UserIngredient userIngredient = userIngredientService.findById(
-                new UserIngredientId(
-                        userIngredientDTO.getUserId(),
-                        userIngredientDTO.getIngredientId()))
-                .orElse(null);
-        if (userIngredient != null){
-            userIngredient.setQuantity(userIngredientDTO.getQuantity());
-            return userIngredientMapper.entityToDto(userIngredientService.save(userIngredient));
-        }
-        return null;
+    public ResponseEntity<UserIngredientDTO> userIngredient(@RequestBody UserIngredientDTO userIngredientDTO){
+        Optional<UserIngredient> userIngredient = userIngredientService.findById(
+                new UserIngredientId(userIngredientDTO.getUserId(), userIngredientDTO.getIngredientId()));
+        userIngredient.ifPresent(value -> value.setQuantity(userIngredientDTO.getQuantity()));
+        return userIngredient.map(value -> ResponseEntity.ok(userIngredientMapper.entityToDto(userIngredientService.save(value))))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     //DELETE MAPPINGS
     @DeleteMapping("/ingredient/{userId}/{ingredientId}")
-    public String deleteUserIngredient(@PathVariable Integer userId, @PathVariable Integer ingredientId){
+    public ResponseEntity<String> deleteUserIngredient(@PathVariable Integer userId, @PathVariable Integer ingredientId){
         userIngredientService.deleteById(new UserIngredientId(userId, ingredientId));
-        return "User Ingredient Deleted Successfully";
+        return ResponseEntity.ok("User Ingredient Deleted Successfully");
     }
 
     @DeleteMapping("/ingredient/{userId}")
-    public String deleteUser(@PathVariable Integer userId){
+    public ResponseEntity<String> deleteUser(@PathVariable Integer userId){
         userService.deleteById(userId);
-        return "User Successfully";
+        return ResponseEntity.ok("User Successfully");
     }
 }

@@ -1,10 +1,8 @@
 package qc.colval.cuisineapp.rest_controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import qc.colval.cuisineapp.mappers.EntityMapper;
 import qc.colval.cuisineapp.models.dto.IngredientDTO;
 import qc.colval.cuisineapp.models.entities.Ingredient;
@@ -23,12 +21,16 @@ public class IngredientController {
 
     //GET MAPPING
     @GetMapping("/find")
-    public List<IngredientDTO> findIngredientsByNameSubStr(@RequestBody Map<String, String> ingredientNameSubStr){
-        return ingredientService.findByIngredientNameSubStr(ingredientNameSubStr.get("ingredientNameSubStr")).stream().map(ingredientMapper::entityToDto).collect(Collectors.toList());
+    public ResponseEntity<List<IngredientDTO>> findIngredientsByNameSubStr(@RequestParam String ingredientNameSubStr){
+        return ResponseEntity.ok(ingredientService.findByIngredientNameSubStr(ingredientNameSubStr)
+                .stream().map(ingredientMapper::entityToDto)
+                .collect(Collectors.toList()));
     }
 
     @GetMapping
-    public List<IngredientDTO> findAllIngredients(){
-        return ingredientService.findAll().stream().map(ingredientMapper::entityToDto).collect(Collectors.toList());
+    public ResponseEntity<List<IngredientDTO>> findAllIngredients(){
+        return ResponseEntity.ok(ingredientService.findAll()
+                .stream().map(ingredientMapper::entityToDto)
+                .collect(Collectors.toList()));
     }
 }

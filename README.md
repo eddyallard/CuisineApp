@@ -22,6 +22,10 @@
     "authorId": 2
 }`
 
+* **Error Response:**
+
+    * **Code:** 404 NOT FOUND  <br />
+
 ### Get all recipes
 
 * **URL**
@@ -61,9 +65,9 @@
 
     `GET`
 
-* **Data Params**
+* **URL Params**
 
-    {"recipeNameSubStr": "your_recipe_substring"}
+    `recipeNameSubStr=[string]`
 
     _The input is not case sensitive._
 * **Success Response:**
@@ -256,9 +260,9 @@
 
     `GET`
 
-* **Data Params**
+* **URL Params**
 
-    {"ingredientNameSubStr": "your_ingredient_substring"}
+    `ingredientNameSubStr=[string]`
 
     _The input is not case sensitive._
 * **Success Response:**
@@ -449,7 +453,11 @@
     "voteValue": -1
 }`
 
-    _Note that a user cannot vote twice for the same recipe, this is handled internally. If you receive an empty response, it means you were trying to submit the same vote twice, or that your vote value isn't valid._
+* **Error Response:**
+
+    * **Code:** 400 BAD REQUEST  <br />
+
+    _Note that a user cannot vote twice for the same recipe, this is handled internally. If you receive a `400 BAD REQUEST`, it means you were trying to submit the same vote twice, or that your vote value isn't valid(either -1 or 1)._
 
 ### Update recipe name
 
@@ -477,6 +485,10 @@
         "authorId": 2
     }`
 
+* **Error Response:**
+
+    * **Code:** 404 NOT FOUND  <br />
+
 ### Update recipe instruction
 
 * **URL**
@@ -502,6 +514,10 @@
         "recipeInstruction": "your_new_recipe_instruction",
         "authorId": 2
     }`
+
+* **Error Response:**
+
+    * **Code:** 404 NOT FOUND  <br />
 
 ### Update recipe ingredient quantity
 
@@ -534,6 +550,10 @@
 
     _Note, if nothing is returned, your RecipeIngredient was not found._
 
+* **Error Response:**
+
+    * **Code:** 404 NOT FOUND  <br />
+
 ### Update user password
 
 * **URL**
@@ -560,6 +580,10 @@
     "email": "felix@jmail.com",
     "userPassword": "your_new_user_password"
 }`
+
+* **Error Response:**
+
+    * **Code:** 404 NOT FOUND  <br />
 
 ### Update user ingredient quantity
 
@@ -591,6 +615,11 @@
     }`
 
     _Note, if nothing is returned, your UserIngredient was not found._
+
+* **Error Response:**
+
+    * **Code:** 404 NOT FOUND  <br />
+
 ### Delete user ingredient
 
 * **URL**
