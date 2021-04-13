@@ -11,25 +11,25 @@
 <div class="overflow-auto" style="margin: auto; max-height: 45rem;">
   <div class="container ">
     <div class="row">
-      <div class="col-sm" style="margin-top: 1rem;">
-        <div class="card text-white bg-dark tada" style="width: 25rem; margin: auto;" *ngFor="let recipe of recipes; let i = index; let f = first;">
+      <div class="col-sm" style="margin-top: 1rem;  padding: 2px;">
+        <div class="card text-white bg-dark tada border border-primary rounded" style="width: 25rem; margin: auto; border-width: 5px;" *ngFor="let recipe of recipes; let i = index; let f = first;">
           <div  *ngIf="i % 2 != 0 || f || i == 1">
           <img class="card-img-top" src="assets/images/jerma.jpg" alt="Card image cap">
           <div class="card-body">
-            <p class="card-text">{{recipe.RecipeName}}</p>
+            <h2 class="card-text">{{recipe.recipeName}}</h2>
           </div>
-          <a href="recipes/{{recipe.Id - 1}}" class="card-link">View full recipe</a>
+          <a href="recipes/{{recipe.recipeId}}" class="card-link">View full recipe</a>
         </div>
         </div>
       </div>
       <div class="col-sm" style="margin-top: 1rem;">
-        <div class="card text-white bg-dark tada" style="width: 25rem; margin: auto; " *ngFor="let recipe of recipes; let i = index; let f = first;">
+        <div class="card text-white bg-dark tada border border-primary rounded" style="width: 25rem; margin: auto; border-width: 5px;" *ngFor="let recipe of recipes; let i = index; let f = first;">
           <div  *ngIf="i % 2 == 0 && f != true">
           <img class="card-img-top" src="assets/images/jerma.jpg" alt="Card image cap">
           <div class="card-body">
-            <p class="card-text">{{recipe.RecipeName}}</p>
+            <h2 class="card-text">{{recipe.recipeName}}</h2>
           </div>
-          <a href="recipes/{{recipe.Id - 1}}" class="card-link">View full recipe</a>
+          <a href="recipes/{{recipe.recipeId}}" class="card-link">View full recipe</a>
         </div>
         </div>
       </div>

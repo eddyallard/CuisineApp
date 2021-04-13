@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Recipe} from '../interfaces/recipe';
+import {APIRecipe} from '../interfaces/apiRecipe';
 import {RecipeService} from '../recipe.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { Ingredient } from '../interfaces/Ingredient';
+import { IngredientService } from '../ingredient.service';
 
 
 @Component({
@@ -12,16 +14,30 @@ import { Location } from '@angular/common';
 })
 export class RecipeDetailComponent implements OnInit {
 
-  recipe: Recipe = null;
+  recipe: APIRecipe = new APIRecipe(0,"Albert","Placeholder", 0);
+  ingredients: Ingredient[] = [];
   constructor(
     private recipeService : RecipeService,
     private location: Location,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private ingredientService: IngredientService
     ) { }
 
   getRecipe(): void {
     const id = +this.activatedRoute.snapshot.paramMap.get('id');
-    this.recipe = this.recipeService.getRecipeById(id);
+    this.recipeService.getRecipeById(id).subscribe((data: APIRecipe)=>{
+      console.log(data);
+      this.recipe = data;
+      this.getIngredients(this.recipe.recipeId);
+    })  
+  }
+
+  getIngredients(id : number): void{
+    this.ingredientService.getIngredientsById(id).subscribe((data: any)=>{
+      console.log(data);
+      let jsonObj = JSON.parse(data);
+      this.ingredients = data
+    });
   }
 
   ngOnInit(): void {

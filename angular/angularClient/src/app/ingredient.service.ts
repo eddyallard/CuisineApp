@@ -12,23 +12,24 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class IngredientService {
 
   private filtered : Ingredient[];
+  private ingredientRecipeUrl = 'http://localhost:8080/api/recipe/ingredient/'
   private ingredientUrl = 'http://localhost:8080/api/ingredient';
   private findIngredientsUrl = 'http://localhost:8080/api/ingredient/find'
-
-  getIngredient(): Ingredient[] {
-    return INGREDIENTS;
-    
-  }
 
   getHttpIngredient() {
     let i = this.http.get(this.ingredientUrl);
     return i;
-    
   }
+
+  getIngredientsById(id : number){
+    let url = this.ingredientRecipeUrl.concat(id.toString())
+    return this.http.get(url)
+  }
+  
   searchIngredientBySubStr(subStr : string){
     let params = new HttpParams().set("ingredientNameSubStr",subStr)
     let i = this.http.get(this.findIngredientsUrl, {params: params});
-    console.log("poggy")
+    
     console.log(i);
     return i; 
   }

@@ -12,17 +12,23 @@ import {APIRecipe} from './interfaces/apiRecipe'
 })
 export class RecipeService {
 
+  private recipeGetUrl = 'http://localhost:8080/api/recipe/';
   private recipePostUrl = 'http://localhost:8080/api/recipe';
   private recipeIngredientPostUrl = 'http://localhost:8080/api/recipe/ingredient';
 
   constructor(private http: HttpClient) { }
 
-  getRecipe(): Recipe[] {
-    return RECIPES;
+  getRecipe() {
+    let i = this.http.get(this.recipePostUrl);
+    console.log(i);
+    return i;
   }
 
-  getRecipeById(id: number): Recipe{
-   return RECIPES[id];
+  getRecipeById(id: number){
+   let url = this.recipeGetUrl.concat(id.toString());
+   let i = this.http.get(url);
+   console.log(i);
+   return i;
   }
 
   private postRecipeEmpty (recipe: Recipe, author: number){
