@@ -2,7 +2,7 @@ export class Ingredient {
     constructor(
         public ingredientId: number,
         public ingredientName: string,
-        public measureType: MeasureType
+        public measureType: MeasureType,
       ) {  }
     }
  export enum MeasureType {

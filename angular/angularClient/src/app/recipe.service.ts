@@ -4,7 +4,8 @@ import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'node:constants';
 import { count } from 'rxjs/operators';
 import { Ingredient } from './interfaces/Ingredient';
 import {Recipe} from './interfaces/recipe';
-import {RECIPES} from './Mock/MockRecipe'
+import {RECIPES} from './Mock/MockRecipe';
+import {APIRecipe} from './interfaces/apiRecipe'
 
 @Injectable({
   providedIn: 'root'
@@ -34,20 +35,22 @@ export class RecipeService {
 
   postRecipeIngredient (ingredients : Ingredient[], id : number, quantities : number[]){
     let count = 0;
-    console.log(id);
     for (let ingredient of ingredients){
-      const body = { recipeId: id,
+      let body = 
+      { recipeId: id,
         ingredientId: ingredient.ingredientId,
-        quantiy: quantities[count]
+        quantity: quantities[count]
        };
+       console.log(count);
        count++;
-      this.http.post(this.recipeIngredientPostUrl,body)
+      this.http.post(this.recipeIngredientPostUrl,body).toPromise();
     }
   }
 
   postRecipe(recipe: Recipe, ingredients: Ingredient[], quantities: number[], author: number ){
-    this.postRecipeEmpty(recipe, author).subscribe((data: Recipe)=>{
-      this.postRecipeIngredient(ingredients, data.Id, quantities)
+    this.postRecipeEmpty(recipe, author).subscribe((data : APIRecipe)=>{
+      console.log(data);
+      this.postRecipeIngredient(ingredients, data.recipeId, quantities)
     });
     
   }
