@@ -12,9 +12,10 @@ import { IngredientService } from '../ingredient.service';
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.css']
 })
+
 export class RecipeDetailComponent implements OnInit {
 
-  recipe: APIRecipe = new APIRecipe(0,"Albert","Placeholder", 0);
+  recipe: APIRecipe = new APIRecipe(0,"Placeholder","Placeholder", 0);
   ingredients: Ingredient[] = [];
   constructor(
     private recipeService : RecipeService,
@@ -26,17 +27,15 @@ export class RecipeDetailComponent implements OnInit {
   getRecipe(): void {
     const id = +this.activatedRoute.snapshot.paramMap.get('id');
     this.recipeService.getRecipeById(id).subscribe((data: APIRecipe)=>{
-      console.log(data);
       this.recipe = data;
       this.getIngredients(this.recipe.recipeId);
     })  
   }
 
   getIngredients(id : number): void{
-    this.ingredientService.getIngredientsById(id).subscribe((data: any)=>{
+    this.ingredientService.getIngredientsById(id).subscribe((data: Object[])=>{
       console.log(data);
-      let jsonObj = JSON.parse(data);
-      this.ingredients = data
+      
     });
   }
 
