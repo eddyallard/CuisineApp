@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { fromEventPattern } from 'rxjs';
 import {RecipeService} from '../recipe.service';
-import {Recipe} from '../interfaces/recipe';
+import {APIRecipe} from '../interfaces/apiRecipe';
 import {Ingredient} from '../interfaces/Ingredient';
 import {IngredientService} from '../ingredient.service'
 import { FormControl } from '@angular/forms';
@@ -14,13 +14,20 @@ import { FormControl } from '@angular/forms';
 })
 export class NewRecipeComponent implements OnInit {
 
-  model = new Recipe(69420, '', '', []);
+  model = new APIRecipe(69420, '', '',0);
   ingredients : Ingredient[] = [];
   ingredientList : Ingredient[] = [];
   filteredIngredient : Ingredient[];
   quantitiesList: number[] = [];
 
   text = new FormControl('');
+
+  events: string[] = [];
+  opened: boolean;
+
+  isHidden: boolean = true;
+
+  shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
 
   constructor(private recipeService : RecipeService, private ingredientService : IngredientService) { }
 
@@ -50,11 +57,15 @@ export class NewRecipeComponent implements OnInit {
   AddIngredient(ing: Ingredient): void {
       this.ingredientList.push(ing);
       this.text.setValue("");
+      this.isHidden = false;
   }
 
   DeleteIngredient(index: number) : void{
     this.ingredientList.splice(index, 1)
     this.quantitiesList.splice(index,)
+    if (this.ingredientList.length == 0){
+      this.isHidden = true;
+    }
   }
 
 }

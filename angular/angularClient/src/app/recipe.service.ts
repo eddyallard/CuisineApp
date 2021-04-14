@@ -20,7 +20,6 @@ export class RecipeService {
 
   getRecipe() {
     let i = this.http.get(this.recipePostUrl);
-    console.log(i);
     return i;
   }
 
@@ -31,9 +30,9 @@ export class RecipeService {
    return i;
   }
 
-  private postRecipeEmpty (recipe: Recipe, author: number){
-    const body = { recipeName: recipe.RecipeName,
-      recipeInstruction: recipe.Instruction,
+  private postRecipeEmpty (recipe: APIRecipe, author: number){
+    const body = { recipeName: recipe.recipeName,
+      recipeInstruction: recipe.recipeInstruction,
       authorId: author
      };
     return this.http.post(this.recipePostUrl, body);
@@ -53,7 +52,7 @@ export class RecipeService {
     }
   }
 
-  postRecipe(recipe: Recipe, ingredients: Ingredient[], quantities: number[], author: number ){
+  postRecipe(recipe: APIRecipe, ingredients: Ingredient[], quantities: number[], author: number ){
     this.postRecipeEmpty(recipe, author).subscribe((data : APIRecipe)=>{
       console.log(data);
       this.postRecipeIngredient(ingredients, data.recipeId, quantities)

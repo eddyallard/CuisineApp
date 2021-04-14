@@ -36,6 +36,7 @@ export class RecipeDetailComponent implements OnInit {
     this.ingredientService.getIngredientsById(id).subscribe((data: Object[])=>{
       console.log(data);
       
+      
     });
   }
 
