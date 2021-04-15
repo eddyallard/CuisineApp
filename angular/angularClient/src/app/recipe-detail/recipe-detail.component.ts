@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Ingredient } from '../interfaces/Ingredient';
 import { IngredientService } from '../ingredient.service';
+import {Router} from '@angular/router';
+import { Route } from '@angular/compiler/src/core';
 
 
 @Component({
@@ -21,7 +23,8 @@ export class RecipeDetailComponent implements OnInit {
     private recipeService : RecipeService,
     private location: Location,
     private activatedRoute: ActivatedRoute,
-    private ingredientService: IngredientService
+    private ingredientService: IngredientService,
+    private router: Router
     ) { }
 
   getRecipe(): void {
@@ -38,6 +41,11 @@ export class RecipeDetailComponent implements OnInit {
       
       
     });
+  }
+
+  deleteRecipe(): void{
+    this.recipeService.deleteRecipe(this.recipe);
+    this.router.navigateByUrl('recipes/all');
   }
 
   ngOnInit(): void {

@@ -5,6 +5,8 @@ import {APIRecipe} from '../interfaces/apiRecipe';
 import {Ingredient} from '../interfaces/Ingredient';
 import {IngredientService} from '../ingredient.service'
 import { FormControl } from '@angular/forms';
+import {Router} from '@angular/router';
+
 
 
 @Component({
@@ -29,7 +31,7 @@ export class NewRecipeComponent implements OnInit {
 
   shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
 
-  constructor(private recipeService : RecipeService, private ingredientService : IngredientService) { }
+  constructor(private recipeService : RecipeService, private ingredientService : IngredientService, private router: Router) { }
 
   ngOnInit(): void {
     this.getIngredient();
@@ -52,6 +54,7 @@ export class NewRecipeComponent implements OnInit {
 
   PostRecipe(): void {
     this.recipeService.postRecipe(this.model,this.ingredientList,this.quantitiesList, 2);
+    this.router.navigateByUrl('recipes/all');
   }
 
   AddIngredient(ing: Ingredient): void {

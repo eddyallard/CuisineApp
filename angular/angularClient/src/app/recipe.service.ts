@@ -6,6 +6,7 @@ import { Ingredient } from './interfaces/Ingredient';
 import {Recipe} from './interfaces/recipe';
 import {RECIPES} from './Mock/MockRecipe';
 import {APIRecipe} from './interfaces/apiRecipe'
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class RecipeService {
   private recipePostUrl = 'http://localhost:8080/api/recipe';
   private recipeIngredientPostUrl = 'http://localhost:8080/api/recipe/ingredient';
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient, private router: Router) { }
 
   getRecipe() {
     let i = this.http.get(this.recipePostUrl);
@@ -57,6 +59,13 @@ export class RecipeService {
       console.log(data);
       this.postRecipeIngredient(ingredients, data.recipeId, quantities)
     });
+    
+  }
+
+  deleteRecipe(recipe: APIRecipe){
+    let url = this.recipeIngredientPostUrl + "/" +recipe.recipeId.toString();
+    this.http.delete(url,{responseType: 'text'}).toPromise();
+    
     
   }
 }
