@@ -85,13 +85,13 @@ public class UserController {
     }
 
     //DELETE MAPPINGS
-    @DeleteMapping("/ingredient/{userId}/{ingredientId}")
-    public ResponseEntity<String> deleteUserIngredient(@PathVariable Integer userId, @PathVariable Integer ingredientId){
+    @DeleteMapping("/ingredient")
+    public ResponseEntity<String> deleteUserIngredient(@RequestParam Integer userId, @RequestParam Integer ingredientId){
         userIngredientService.deleteById(new UserIngredientId(userId, ingredientId));
         return ResponseEntity.ok("User Ingredient Deleted Successfully");
     }
 
-    @DeleteMapping("/ingredient/{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable Integer userId){
         userService.deleteById(userId);
         return ResponseEntity.ok("User Successfully");

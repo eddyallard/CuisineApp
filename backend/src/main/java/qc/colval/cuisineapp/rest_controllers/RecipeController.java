@@ -127,13 +127,13 @@ public class RecipeController {
     }
 
     //DELETE MAPPINGS
-    @DeleteMapping("/ingredient/{recipeId}/{ingredientId}")
-    public ResponseEntity<String> deleteIngredient(@PathVariable Integer recipeId, @PathVariable Integer ingredientId){
+    @DeleteMapping("/ingredient")
+    public ResponseEntity<String> deleteIngredient(@RequestParam Integer recipeId, @RequestParam Integer ingredientId){
         recipeIngredientService.deleteById(new RecipeIngredientId(ingredientId, recipeId));
         return ResponseEntity.ok("Recipe Ingredient Deleted Successfully");
     }
 
-    @DeleteMapping("/ingredient/{recipeId}")
+    @DeleteMapping("/{recipeId}")
     public ResponseEntity<String> deleteRecipe(@PathVariable Integer recipeId){
         recipeService.deleteById(recipeId);
         return ResponseEntity.ok("Recipe Deleted Successfully");
