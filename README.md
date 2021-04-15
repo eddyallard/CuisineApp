@@ -624,7 +624,13 @@
 
 * **URL**
 
-    <_/api/user/ingredient/{userId}/{ingredientId}_>
+    <_/api/user/ingredient_>
+
+
+* **URL Params**
+
+    `userId=[int]`
+    `ingredientId=[int]`
 
 * **Request Type**
 
@@ -641,7 +647,7 @@
 
 * **URL**
 
-    <_/api/user/ingredient/{userId}_>
+    <_/api/user/{userId}_>
 
 * **Request Type**
 
@@ -658,7 +664,13 @@
 
 * **URL**
 
-    <_/api/recipe/ingredient/{recipeId}/{ingredientId}_>
+    <_/api/recipe/ingredient_>
+
+
+* **URL Params**
+
+    `recipeId=[int]`
+    `ingredientId=[int]`
 
 * **Request Type**
 
@@ -675,7 +687,7 @@
 
 * **URL**
 
-    <_/api/recipe/ingredient/{recipeId}_>
+    <_/api/recipe/{recipeId}_>
 
 * **Request Type**
 
