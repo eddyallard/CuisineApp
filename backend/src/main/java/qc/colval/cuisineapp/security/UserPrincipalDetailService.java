@@ -13,9 +13,9 @@ import qc.colval.cuisineapp.repositories.IUserRepository;
 public class UserPrincipalDetailService implements UserDetailsService {
     private final IUserRepository repos;
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = repos.findUserByUserName(s)
-                .orElseThrow(() -> new UsernameNotFoundException("User " + s + " not found."));
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        User user = repos.findUserByUserName(userName)
+                .orElseThrow(() -> new UsernameNotFoundException("User " + userName + " not found."));
         return new UserPrincipal(user);
     }
 }

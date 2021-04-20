@@ -3,6 +3,8 @@ package qc.colval.cuisineapp.rest_controllers;
 import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import qc.colval.cuisineapp.mappers.EntityMapper;
 import qc.colval.cuisineapp.models.dto.IngredientDTO;
@@ -27,6 +29,7 @@ import java.util.Optional;
 @RequestMapping("/api/user")
 @AllArgsConstructor
 public class UserController {
+    private final PasswordEncoder encoder;
     private final UserService userService;
     private final IngredientService ingredientService;
     private final EntityMapper<User, UserDTO> userMapper;
@@ -56,7 +59,9 @@ public class UserController {
     //POST MAPPINGS
     @PostMapping
     public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO){
-        User saved = userService.save(userMapper.dtoToEntity(userDTO));
+        User toBeSaved = userMapper.dtoToEntity(userDTO);
+        toBeSaved.encryptPassword(encoder);
+        User saved = userService.save(toBeSaved);
         return ResponseEntity.created(URI.create(saved.getUserId().toString())).body(userMapper.entityToDto(saved));
     }
 

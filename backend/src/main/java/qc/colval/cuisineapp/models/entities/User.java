@@ -1,6 +1,7 @@
 package qc.colval.cuisineapp.models.entities;
 
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -57,5 +58,9 @@ public class User implements Serializable {
             return Arrays.asList(this.permissions.split(","));
         }
         return new ArrayList<>();
+    }
+
+    public void encryptPassword(PasswordEncoder encoder){
+        this.setUserPassword(encoder.encode(this.getUserPassword()));
     }
 }
