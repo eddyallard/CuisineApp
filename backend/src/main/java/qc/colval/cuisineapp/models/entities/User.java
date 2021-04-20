@@ -43,6 +43,8 @@ public class User implements Serializable {
     @Column(name = "Permissions")
     private String permissions = "";
 
+    private boolean active = true;
+
     public List<String> getRolesList() {
         if (this.roles.length() > 0) {
             return Arrays.asList(this.roles.split(","));
