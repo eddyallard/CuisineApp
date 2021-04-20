@@ -1,9 +1,12 @@
 package qc.colval.cuisineapp.models.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import qc.colval.cuisineapp.models.dto.user.DataDTO;
+import qc.colval.cuisineapp.models.dto.user.SupportDTO;
 
 import java.util.List;
 
@@ -12,8 +15,10 @@ import java.util.List;
 @Getter
 @Setter
 public class UserDTO {
-    private Integer userId;
-    private String userName;
-    private String email;
-    private String userPassword;
+    @JsonProperty("data")
+    private DataDTO dataDTO;
+
+    @JsonProperty("support")
+    private SupportDTO supportDTO;
+
 }
