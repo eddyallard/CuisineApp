@@ -1,5 +1,6 @@
 package qc.colval.cuisineapp.models.entities;
 
+import com.sun.istack.Nullable;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -16,6 +17,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@NamedQueries({
+        @NamedQuery(name = "User.findUserByUserName", query = "SELECT u FROM User u WHERE u.userName = :userName")
+})
 public class User implements Serializable {
     @Id
     @Column(name = "UserId")
@@ -39,11 +43,12 @@ public class User implements Serializable {
     private String userPassword;
 
     @Column(name = "Roles")
-    private String roles = "";
+    private String roles;
 
     @Column(name = "Permissions")
-    private String permissions = "";
+    private String permissions;
 
+    @Column(name = "Active")
     private boolean active = true;
 
     public List<String> getRolesList() {

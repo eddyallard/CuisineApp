@@ -14,7 +14,9 @@ public class UserMapper implements EntityMapper<User, UserDTO> {
                 entity.getUserId(),
                 entity.getUserName(),
                 entity.getEmail(),
-                entity.getUserPassword()
+                entity.getUserPassword(),
+                entity.getRoles(),
+                entity.getPermissions()
         );
     }
 
@@ -24,7 +26,10 @@ public class UserMapper implements EntityMapper<User, UserDTO> {
                 userDTO.getUserId(),
                 userDTO.getUserName(),
                 userDTO.getEmail(),
-                userDTO.getUserPassword()
+                userDTO.getUserPassword(),
+                userDTO.getRoles(),
+                userDTO.getPermissions(),
+                true
         );
     }
 }

@@ -15,10 +15,15 @@ import java.util.List;
 @Getter
 @Setter
 public class UserDTO {
-    @JsonProperty("data")
+    /*@JsonProperty("data")
     private DataDTO dataDTO;
 
     @JsonProperty("support")
-    private SupportDTO supportDTO;
-
+    private SupportDTO supportDTO;*/
+    private Integer userId;
+    private String userName;
+    private String email;
+    private String userPassword;
+    private String roles;
+    private String permissions;
 }
