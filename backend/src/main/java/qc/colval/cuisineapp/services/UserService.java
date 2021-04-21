@@ -1,6 +1,7 @@
 package qc.colval.cuisineapp.services;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import qc.colval.cuisineapp.models.entities.User;
 import org.springframework.stereotype.Service;
 import qc.colval.cuisineapp.repositories.IUserRepository;
@@ -10,6 +11,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class UserService {
+    private final PasswordEncoder encoder;
     private final IUserRepository repos;
 
     public Optional<User> findById(Integer id){
@@ -17,6 +19,10 @@ public class UserService {
     }
     public User save(User user){
         user.setUserId(null);
+        user.encryptPassword(encoder);
+        user.setPermissions("");
+        user.setRoles("");
+        user.setActive(true);
         return repos.save(user);
     }
 

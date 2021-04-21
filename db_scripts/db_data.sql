@@ -35,11 +35,11 @@ VALUES('flour', 'g.'),
 ('chicken broth','unit'),
 ('almonds','g.');
 
-INSERT INTO User(UserName, email, UserPassword)
-VALUES ("Jean Guy", "jeanguy@jmail.ca", "qwerty"),
-("Pierre Paul", "ppaul@coldmail.com", "soleil123"),
-("Arsène Lupin", "gentleman@cambrioleur.fr", "password"),
-("François Legault", "legault@aweilleamaison.qc.ca", "horacio");
+INSERT INTO User(UserName, email, UserPassword, Roles, Permissions, Active)
+VALUES ("Jean Guy", "jeanguy@jmail.ca", "qwerty", "", "", false),
+("Pierre Paul", "ppaul@coldmail.com", "soleil123", "", "", false),
+("Arsène Lupin", "gentleman@cambrioleur.fr", "password", "", "", false),
+("François Legault", "legault@aweilleamaison.qc.ca", "horacio", "", "", false);
 
 INSERT INTO Recipe(RecipeName, RecipeInstruction, UserId)
 VALUES ("Chat farci", "Prendre une farce et la mettre dans le chat.", 1),

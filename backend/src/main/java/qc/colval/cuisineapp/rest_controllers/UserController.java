@@ -54,7 +54,7 @@ public class UserController {
     }
 
     //POST MAPPINGS
-    @PostMapping
+    @PostMapping("/signup")
     public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO){
         User saved = userService.save(userMapper.dtoToEntity(userDTO));
         return ResponseEntity.created(URI.create(saved.getUserId().toString())).body(userMapper.entityToDto(saved));

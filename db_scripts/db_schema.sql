@@ -11,7 +11,10 @@ CREATE table User (
 	UserId int NOT NULL AUTO_INCREMENT primary key,
     UserName varchar(50) NOT NULL,
     email varchar(50) NOT NULL,
-    UserPassword varchar(50) NOT NULL
+    UserPassword varchar(255) NOT NULL,
+    Roles varchar(50),
+    Permissions varchar(50),
+    Active bool
 );
 
 CREATE table Recipe (
@@ -54,5 +57,3 @@ CREATE table Vote (
     foreign key(UserId) REFERENCES User(UserId) ON DELETE CASCADE,
     foreign key(RecipeId) REFERENCES Recipe(RecipeId) ON DELETE CASCADE
 );
-
-
