@@ -1,7 +1,7 @@
 # CuisineApp
 ## SECURITY
 
-The API is secured, to use it, you must go through these steps, otherwise you will get a 403 error.
+The API is secured. To use it, you must go through these steps, otherwise you will get a 403 error.
 1. Sign up [View API Documentation](#add-a-user).
 1. Log in [View API Documentation](#login).
 1. Fetch the bearer token contained in the header of the log in response.
