@@ -22,6 +22,7 @@ public class UserService {
         user.encryptPassword(encoder);
         user.setPermissions("");
         user.setRoles("");
+        user.setActive(true);
         return repos.save(user);
     }
 
