@@ -2,7 +2,6 @@ package qc.colval.cuisineapp.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import qc.colval.cuisineapp.models.entities.Ingredient;
 import qc.colval.cuisineapp.models.entities.RecipeIngredient;
 import qc.colval.cuisineapp.models.entities.id_classes.RecipeIngredientId;
 import qc.colval.cuisineapp.repositories.IRecipeIngredientRepository;
@@ -21,7 +20,7 @@ public class RecipeIngredientService {
 
     public List<RecipeIngredient> findRecipeIngredientForRecipeId(Integer recipeId){
         return repos.findRecipeIngredientForRecipeId(recipeId);
-    };
+    }
 
     public RecipeIngredient save(RecipeIngredient recipeIngredient){
         return repos.save(recipeIngredient);

@@ -51,6 +51,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.repos))
                 .authorizeRequests()
+                /*
+                 * Only the POST requests on /api/user/login and /api/user/signup are aloud without a token
+                 * All other requests work once authenticated.
+                 * */
                 .antMatchers(HttpMethod.POST, "/api/user/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/user/signup").permitAll()
                 .anyRequest().fullyAuthenticated();

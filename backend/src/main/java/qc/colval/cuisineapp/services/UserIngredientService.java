@@ -1,7 +1,6 @@
 package qc.colval.cuisineapp.services;
 
 import lombok.AllArgsConstructor;
-import qc.colval.cuisineapp.models.entities.User;
 import qc.colval.cuisineapp.models.entities.UserIngredient;
 import org.springframework.stereotype.Service;
 import qc.colval.cuisineapp.models.entities.id_classes.UserIngredientId;

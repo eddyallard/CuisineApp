@@ -1,6 +1,6 @@
 package qc.colval.cuisineapp.models.entities;
 
-import com.sun.istack.Nullable;
+
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
