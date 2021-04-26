@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/ingredient")
 @AllArgsConstructor
 public class IngredientController {
