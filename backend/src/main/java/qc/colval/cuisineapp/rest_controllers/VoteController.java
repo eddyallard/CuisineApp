@@ -43,7 +43,7 @@ public class VoteController {
                 return ResponseEntity.ok(voteMapper.entityToDto(voteService.save(updatedVote)));
             }
             //Else if the vote didnt exist;
-            else if (existing.isEmpty()) {
+            else if (!existing.isPresent()) {
                 Vote saved = voteService.save(vote);
                 return ResponseEntity.created(URI.create(vote.getRecipeId().toString() + "_" + vote.getUserId().toString()))
                         .body(voteMapper.entityToDto(saved));
