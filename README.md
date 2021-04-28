@@ -1,5 +1,5 @@
 # CuisineApp
-### _Access api on https://cuisinas.herokuapp.com/_
+### _Access API on https://cuisinas.herokuapp.com/_
 ## SECURITY
 
 The API is secured. To use it, you must go through these steps, otherwise you will get a 403 error.
