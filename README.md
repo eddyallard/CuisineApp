@@ -169,6 +169,30 @@ The API is secured. To use it, you must go through these steps, otherwise you wi
     }
 ]`
 
+### Get current user
+
+* **URL**
+
+    <_/api/user/self_>
+
+* **Request Type**
+
+    `GET`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:**    
+    `{
+    "userId": 1,
+    "userName": "Jean-Guy",
+    "email": "harrypotter@poudlard.ca",
+    "userPassword": "pass",
+    "roles": "",
+    "permissions": "",
+    "active": false
+}`
+
 ### Get a user with an Id
 
 * **URL**

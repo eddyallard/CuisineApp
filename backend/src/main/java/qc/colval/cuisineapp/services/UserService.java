@@ -17,12 +17,23 @@ public class UserService {
     public Optional<User> findById(Integer id){
         return repos.findById(id);
     }
+
+    public Optional<User> findByUsername(String username) {
+        return repos.findUserByUserName(username);
+    }
     public User save(User user){
+        return repos.save(user);
+    }
+
+    public User saveNew(User user) throws Exception {
         user.setUserId(null);
         user.encryptPassword(encoder);
         user.setPermissions("");
         user.setRoles("");
         user.setActive(true);
+        if(repos.findUserByUserName(user.getUserName()).isPresent()){
+            throw new Exception("Username already taken.");
+        }
         return repos.save(user);
     }
 
