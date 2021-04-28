@@ -1,8 +1,9 @@
 package qc.colval.cuisineapp.rest_controllers;
 
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import qc.colval.cuisineapp.mappers.EntityMapper;
 import qc.colval.cuisineapp.models.dto.IngredientDTO;
@@ -17,6 +18,7 @@ import qc.colval.cuisineapp.services.IngredientService;
 import qc.colval.cuisineapp.services.UserIngredientService;
 import qc.colval.cuisineapp.services.UserService;
 
+import javax.swing.text.html.Option;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,11 +55,23 @@ public class UserController {
         return ResponseEntity.ok(ingredientQuantities);
     }
 
+    @GetMapping("/self")
+    public ResponseEntity<UserDTO> getUserWithUserName(@AuthenticationPrincipal String username){
+        Optional<User> user = userService.findByUsername(username);
+        return user.map(value -> ResponseEntity.ok(userMapper.entityToDto(userService.save(value))))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     //POST MAPPINGS
     @PostMapping("/signup")
     public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO){
-        User saved = userService.save(userMapper.dtoToEntity(userDTO));
-        return ResponseEntity.created(URI.create(saved.getUserId().toString())).body(userMapper.entityToDto(saved));
+        try {
+            User saved = userService.saveNew(userMapper.dtoToEntity(userDTO));
+            return ResponseEntity.created(URI.create(saved.getUserId().toString())).body(userMapper.entityToDto(saved));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/ingredient")

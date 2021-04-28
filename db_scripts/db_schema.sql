@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS  Ingredient;
 
 CREATE table User (
 	UserId int NOT NULL AUTO_INCREMENT primary key,
-    UserName varchar(50) NOT NULL,
+    UserName varchar(50) UNIQUE NOT NULL,
     email varchar(50) NOT NULL,
     UserPassword varchar(255) NOT NULL,
     Roles varchar(50),
