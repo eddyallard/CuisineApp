@@ -1,4 +1,4 @@
-<div style="float: right;">
+<div style="float: right; padding-right: 1rem;">
   <form class="form-inline p-2">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -13,22 +13,24 @@
     <div class="row">
       <div class="col-sm" style="margin-top: 1rem;">
         <ng-container *ngFor="let recipe of recipes; let i = index; let f = first;">
-          <ng-container  *ngIf="i % 2 != 0 || f || i == 1">
-          <div class="card text-dark bg-dark shadow p-3 mb-5 bg-white rounded" style="height: 30rem; width: 30rem; margin: auto;">
-            <img class="card-img-top" src="assets/images/jerma.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h2 class="card-text">{{recipe.recipeName}}</h2>
-            </div>
-            <div class="d-flex justify-content-center">
-              <a href="recipes/{{recipe.recipeId}}" class="btn btn-info text-center" style="max-width: 25rem;">View full recipe</a>
-            </div>
-          </div>
+          <ng-container  *ngIf="i % 2 == 0 || f">
+            <ng-container *ngIf="i != 1">
+              <div class="card text-dark bg-dark shadow p-3 mb-5 bg-white rounded" style="height: 30rem; width: 30rem; margin: auto;">
+                <img class="card-img-top" src="assets/images/jerma.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h2 class="card-text">{{recipe.recipeName}}</h2>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <a href="recipes/{{recipe.recipeId}}" class="btn btn-info text-center" style="max-width: 25rem;">View full recipe</a>
+                </div>
+              </div>
+            </ng-container>
           </ng-container>
         </ng-container>
   </div>
       <div class="col-sm" style="margin-top: 1rem;">
           <ng-container *ngFor="let recipe of recipes; let i = index; let f = first;">
-            <ng-container  *ngIf="i % 2 == 0 && f != true">
+            <ng-container  *ngIf="i % 2 != 0 && f != true || i == 1">
               <div class="card text-dark bg-dark shadow p-3 mb-5 bg-white rounded" style="height: 30rem; width: 30rem; margin: auto;">
               <img class="card-img-top" src="assets/images/jerma.jpg" alt="Card image cap">
               <div class="card-body">

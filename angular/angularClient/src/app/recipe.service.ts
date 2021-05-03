@@ -63,8 +63,8 @@ export class RecipeService {
   }
 
   deleteRecipe(recipe: APIRecipe){
-    let url = this.recipeIngredientPostUrl + "/" +recipe.recipeId.toString();
-    this.http.delete(url,{responseType: 'text'}).toPromise();
+    let url = this.recipeGetUrl +recipe.recipeId.toString();
+    this.http.delete(url).toPromise();
     
     
   }

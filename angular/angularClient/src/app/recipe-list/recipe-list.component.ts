@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {RecipeService} from '../recipe.service';
 import {APIRecipe} from '../interfaces/apiRecipe';
 
+
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
@@ -22,6 +23,10 @@ export class RecipeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRecipes();
+  }
+
+  refresh(): void {
+    window.location.reload();  
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../auth.service';
 import {User} from '../interfaces/user'
 @Component({
   selector: 'app-login',
@@ -7,13 +8,20 @@ import {User} from '../interfaces/user'
 })
 export class LoginComponent {
 
-  model = new User(1, 'Bepix', 'bill@fuckyou.com', 'password');
+  constructor(private auth : AuthService) { }
+
+  model = new User(69420, '', '', '');
 
   submitted = false;
 
-  onSubmit() { this.submitted = true; }
+  onSignInSubmit() 
+  {
+    this.auth.login(this.model);
+  }
 
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
+  onRegisterSubmit() 
+  {
+    this.auth.postUser(this.model);
+  }
 
 }
