@@ -12,12 +12,15 @@ export class RecipeListComponent implements OnInit {
 
   recipes: APIRecipe[] = [];
 
+  loading : Boolean = true;
+
   constructor(private recipeService : RecipeService) { }
 
   getRecipes(): void {
     this.recipeService.getRecipe().subscribe((data: APIRecipe[])=>{
       console.log(data);
       this.recipes = data;
+      this.loading = false;
     })
   }  
 
