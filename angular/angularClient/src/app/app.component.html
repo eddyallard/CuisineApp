@@ -4,7 +4,6 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -13,10 +12,9 @@
         <li class="nav-item">
           <a class="nav-link" href="recipes/all">All of our recipes</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="authTag" href="login">Sign in/Register</a>
-        </li>
       </ul>
+        <div *ngIf="authTag; else elseBlock">Welcome, {{user}}</div> 
+        <ng-template #elseBlock><a class="nav-link my-2 my-sm-0" *ngIf="authTag" href="login">Sign in/Register</a></ng-template>
     </div>
   </nav>
   

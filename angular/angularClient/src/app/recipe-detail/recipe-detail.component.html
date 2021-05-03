@@ -1,18 +1,20 @@
+<mat-sidenav-container class="example-container" style="height: 100%;">
+  <mat-sidenav #sidenav mode="side"  [(opened)]="opened">
+               <div  style="max-width: 100%; padding: 1rem;">
+                <h2 class="text-center">Ingredients</h2>
+                <ul class="list-group shadow">
+                <li class="list-group-item input-group" *ngFor="let ingredient of ingredients; let i = index" style="display: inline-block;" >
+                  {{quantities[i]}} {{ingredient.measureType}} of {{ingredient.ingredientName}}
+                </li>
+                </ul>
+              </div>  
+  </mat-sidenav>
+
 <div class="card text-dark shadow p-3 mb-5 bg-white rounded" style="margin: auto; margin-top: 10rem; max-width: 50%;">
   <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
     <h1 class="h1 text-center">{{recipe.recipeName}}</h1> <button type="button" class="btn btn-danger" (click)="deleteRecipe()" style="position:absolute; top:0; right:0;">Delete</button>
-</div>
-
-
-  <ul class="list-group" style="margin: auto; max-width: 50%; height: 10rem;">
-    <h3 class="h3">Ingredient: </h3>
-    <li *ngFor="let ingredient of ingredients">
-      <span class="list-group-item list-group-item-primary"></span>
-    </li>
-  </ul>
-
+  </div>
   <div style="margin: auto; max-width: 50%;">
-    <H1 class="h1">Instruction:</H1>
     <p>{{recipe.recipeInstruction}}</p>
   </div>
 </div>

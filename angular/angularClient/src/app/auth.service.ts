@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {User} from './interfaces/user';
 import { HttpClient, HttpHeaders,HttpParams, HttpResponse } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
  
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,8 @@ export class AuthService {
 
   private loginUrl = 'http://localhost:8080/api/user/login';
   private signUpUrl = 'http://localhost:8080/api/user/signup';
+
+  private helper = new JwtHelperService();
 
   postUser(user : User) {
     const body = 
@@ -39,6 +42,10 @@ export class AuthService {
       return localStorage.getItem('token');
     }
     return "";
+  }
+
+  getCurrentUserName() {
+    return this.helper.decodeToken(localStorage.getItem('token')).sub;
   }
 
   isAuthenticated(): Boolean{
