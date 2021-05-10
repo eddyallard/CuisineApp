@@ -14,9 +14,9 @@ import { from } from 'rxjs';
 export class IngredientService {
 
   private filtered : Ingredient[];
-  private ingredientRecipeUrl = 'http://localhost:8080/api/recipe/ingredient/'
-  private ingredientUrl = 'http://localhost:8080/api/ingredient';
-  private findIngredientsUrl = 'http://localhost:8080/api/ingredient/find'
+  private ingredientRecipeUrl = 'https://cuisinas.herokuapp.com/api/recipe/ingredient/'
+  private ingredientUrl = 'https://cuisinas.herokuapp.com/api/ingredient';
+  private findIngredientsUrl = 'https://cuisinas.herokuapp.com/api/ingredient/find'
 
   getHttpIngredient() {
     let i = this.http.get(this.ingredientUrl);

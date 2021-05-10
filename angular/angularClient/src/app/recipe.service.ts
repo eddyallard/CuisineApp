@@ -13,9 +13,9 @@ import {Router} from '@angular/router';
 })
 export class RecipeService {
 
-  private recipeGetUrl = 'http://localhost:8080/api/recipe/';
-  private recipePostUrl = 'http://localhost:8080/api/recipe';
-  private recipeIngredientPostUrl = 'http://localhost:8080/api/recipe/ingredient';
+  private recipeGetUrl = 'https://cuisinas.herokuapp.com/api/recipe/';
+  private recipePostUrl = 'https://cuisinas.herokuapp.com/api/recipe';
+  private recipeIngredientPostUrl = 'https://cuisinas.herokuapp.com/api/recipe/ingredient';
 
 
   constructor(private http: HttpClient, private router: Router) { }

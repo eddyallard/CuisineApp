@@ -9,8 +9,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
   constructor(private http: HttpClient) { }
 
-  private loginUrl = 'http://localhost:8080/api/user/login';
-  private signUpUrl = 'http://localhost:8080/api/user/signup';
+  private loginUrl = 'https://cuisinas.herokuapp.com/api/user/login';
+  private signUpUrl = 'https://cuisinas.herokuapp.com/api/user/signup';
 
   private helper = new JwtHelperService();
 
