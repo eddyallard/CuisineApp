@@ -31,8 +31,6 @@ export class IngredientService {
   searchIngredientBySubStr(subStr : string){
     let params = new HttpParams().set("ingredientNameSubStr",subStr)
     let i = this.http.get(this.findIngredientsUrl, {params: params});
-    
-    console.log(i);
     return i; 
   }
 

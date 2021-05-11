@@ -7,10 +7,12 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root'
 })
 export class AuthService {
+  
   constructor(private http: HttpClient) { }
 
   private loginUrl = 'https://cuisinas.herokuapp.com/api/user/login';
   private signUpUrl = 'https://cuisinas.herokuapp.com/api/user/signup';
+  private selfUrl = 'https://cuisinas.herokuapp.com/api/user/self' 
 
   private helper = new JwtHelperService();
 
@@ -42,6 +44,10 @@ export class AuthService {
       return localStorage.getItem('token');
     }
     return "";
+  }
+
+  getCurrentUserId() {
+    return this.http.get(this.selfUrl)
   }
 
   getCurrentUserName() {

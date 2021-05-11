@@ -21,8 +21,8 @@ export class RecipeService {
   constructor(private http: HttpClient, private router: Router) { }
 
   getRecipe() {
-    let i = this.http.get(this.recipePostUrl);
-    return i;
+    return this.http.get(this.recipePostUrl);
+    
   }
 
   getRecipeById(id: number){

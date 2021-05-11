@@ -18,7 +18,6 @@ export class RecipeListComponent implements OnInit {
 
   getRecipes(): void {
     this.recipeService.getRecipe().subscribe((data: APIRecipe[])=>{
-      console.log(data);
       this.recipes = data;
       this.loading = false;
     })

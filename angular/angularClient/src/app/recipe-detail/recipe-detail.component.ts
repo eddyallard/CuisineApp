@@ -7,6 +7,8 @@ import { Ingredient, MeasureType } from '../interfaces/Ingredient';
 import { IngredientService } from '../ingredient.service';
 import {Router} from '@angular/router';
 import { Route } from '@angular/compiler/src/core';
+import { VoteService } from '../vote.service';
+import { AuthService } from '../auth.service';
 
 
 @Component({
@@ -20,13 +22,21 @@ export class RecipeDetailComponent implements OnInit {
   recipe: APIRecipe = new APIRecipe(0,"Placeholder","Placeholder", 0);
   ingredients: Ingredient[] = [];
   quantities: number[] = [];
+  voteVal: number = 0
+  userVoteVal: number = 0
+  userId: number = 0
 
+  upToggled: boolean = false
+  downToggled: boolean = false
   opened: Boolean = true;
+
   constructor(
     private recipeService : RecipeService,
     private location: Location,
     private activatedRoute: ActivatedRoute,
     private ingredientService: IngredientService,
+    private voteService : VoteService,
+    private auth : AuthService,
     private router: Router
     ) { }
 
@@ -35,6 +45,7 @@ export class RecipeDetailComponent implements OnInit {
     this.recipeService.getRecipeById(id).subscribe((data: APIRecipe)=>{
       this.recipe = data;
       this.getIngredients(this.recipe.recipeId);
+      this.getVotes()
     })  
   }
 
@@ -62,6 +73,56 @@ export class RecipeDetailComponent implements OnInit {
     this.quantities = metaList[1];
 
     });
+  }
+  upvote(): void {
+    this.upToggled = true
+    this.downToggled = false
+    this.voteService.addVote(1,this.recipe.recipeId)
+    if (this.userVoteVal != 1){
+      this.voteVal += 1
+      this.userVoteVal = 1
+    }
+    
+  }
+
+  downvote(): void {
+    this.upToggled = false
+    this.downToggled = true
+    this.voteService.addVote(-1,this.recipe.recipeId)
+    if (this.userVoteVal != -1){
+      this.voteVal -= 1
+      this.userVoteVal = -1
+    }
+  }
+
+  getVotes():void {
+    this.auth.getCurrentUserId().subscribe((data)=>{
+      let id = data["userId"]
+      console.log(this.recipe.recipeId)
+      this.voteService.getVotesFromRecipe(this.recipe.recipeId).subscribe((data)=>{
+        let length = Object.keys(data).length;
+  
+        for (let i = 0; i < length; i++){
+          this.voteVal += data[i]["voteValue"]
+          console.log(data[i]["voteValue"])
+          if (data[i]["userId"] == id){
+            this.userVoteVal = data[i]["voteValue"]
+            if (this.userVoteVal == 1){
+              this.upToggled = true
+              this.downToggled = false
+            }
+            else if (this.userVoteVal == -1){
+              this.upToggled = false
+              this.downToggled = true
+            }
+            else{
+              this.upToggled = false
+              this.downToggled = false
+            }
+          }
+        }
+      })
+    })
   }
 
   deleteRecipe(): void{

@@ -13,7 +13,7 @@
           <a class="nav-link" href="recipes/all">All of our recipes</a>
         </li>
       </ul>
-        <div *ngIf="authTag; else elseBlock">Welcome, {{user}}</div> 
+        <div *ngIf="authTag; else elseBlock"><p class="nav-link">Welcome, {{user}}</p></div> 
         <ng-template #elseBlock><a class="nav-link my-2 my-sm-0" *ngIf="authTag" href="login">Sign in/Register</a></ng-template>
     </div>
   </nav>

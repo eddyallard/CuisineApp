@@ -10,11 +10,23 @@
               </div>  
   </mat-sidenav>
 
-<div class="card text-dark shadow p-3 mb-5 bg-white rounded" style="margin: auto; margin-top: 10rem; max-width: 50%;">
+<div class="card text-dark shadow p-3 mb-5 bg-white rounded" style="margin: auto; margin-top: 2rem; max-width: 50%; height: 75%;">
   <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
-    <h1 class="h1 text-center">{{recipe.recipeName}}</h1> <button type="button" class="btn btn-danger" (click)="deleteRecipe()" style="position:absolute; top:0; right:0;">Delete</button>
+    <h1 class="h1 text-center">{{recipe.recipeName}}</h1>
+    <button mat-mini-fab color="warn" (click)="upvote()" style="position:absolute; top:0; right:0;">
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
   <div style="margin: auto; max-width: 50%;">
     <p>{{recipe.recipeInstruction}}</p>
   </div>
+<div style="display: flex;">
+  <button [ngClass]="{'test': upToggled}" mat-mini-fab color="primary" (click)="upvote()">
+    <mat-icon>thumb_up</mat-icon>
+  </button>
+  <p style="padding-right: 1rem; padding-left: 1rem;">{{voteVal}}</p>
+  <button [ngClass]="{'test': downToggled}" mat-mini-fab color="primary" (click)="downvote()">
+    <mat-icon>thumb_down</mat-icon>
+  </button>
+</div>
 </div>
