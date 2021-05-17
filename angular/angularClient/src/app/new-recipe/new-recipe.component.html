@@ -1,0 +1,54 @@
+<mat-sidenav-container class="example-container" style="height: 100%;">
+  <mat-sidenav #sidenav mode="side"  [(opened)]="opened" (opened)="events.push('open!')"
+               (closed)="events.push('close!')">
+               <div  style="max-width: 100%; padding: 1rem;">
+                <h2 class="text-center">Ingredients</h2>
+                <ul class="list-group shadow">
+                <li class="list-group-item input-group" *ngFor="let ingredient of ingredientList; let i = index" style="display: inline-block;" >
+                  <div class="input-group mb-3">
+                    <input type="number" class="form-control" placeholder="Amount" aria-label="Amount" aria-describedby="basic-addon2" value="0" [(ngModel)]="quantitiesList[i]">
+                    <div class="input-group-append">
+                      <span class="input-group-text">{{ingredient.measureType}} of {{ingredient.ingredientName}}</span>
+                      <button type="button" class="btn btn-danger" (click)="DeleteIngredient(i)">Remove</button>
+                    </div>
+                  </div>
+                </li>
+                </ul>
+              </div>  
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <p><button *ngIf="!isHidden" mat-button class="btn btn-primary" (click)="sidenav.toggle()">></button></p>
+    <div class="card text-dark shadow p-3 mb-5 bg-white rounded" style="margin: auto; margin-top: 5rem; max-width: 50rem;">
+      <h1 class="text-center" style="padding: 1rem;">CREATE YOUR RECIPE</h1>
+    <form class="pt-2" style="max-width: 50%; margin: auto;">
+      <div class="form-group">
+        <label for="recipeTitle">Recipe Name</label>
+        <input type="text" class="form-control" id="recipeTitle" placeholder="Spaghetti"  required
+        [(ngModel)]="model.recipeName" name="rName">
+      </div>
+      <div class="form-group">
+          <label style="padding: 1px;" for="ingredientAdd">Ingredients</label>
+          <mat-form-field>
+              <input [formControl]="text" type="text" placeholder="Enter ingredient " matInput
+                   [matAutocomplete]="auto" (input)="OnSearchChange()">
+                 <mat-autocomplete #auto="matAutocomplete">
+                   <mat-option *ngFor="let ingredient of filteredIngredient" [value]="ingredient.ingredientName" (click)="AddIngredient(ingredient)">
+                     {{ingredient.ingredientName}}              
+                    </mat-option>
+              </mat-autocomplete>
+           </mat-form-field>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Instructions</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required
+        [(ngModel)]="model.recipeInstruction" name="Instructions">></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="PostRecipe()">Submit</button>
+    </form>
+
+</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
