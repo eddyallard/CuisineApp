@@ -90,6 +90,14 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/email/{id}")
+    public ResponseEntity<UserDTO> updateUserEmail(@PathVariable Integer id, @RequestBody Map<String, String> newEmail){
+        Optional<User> user = userService.findById(id);
+        user.ifPresent(value -> value.setEmail(newEmail.get("newEmail")));
+        return user.map(value -> ResponseEntity.ok(userMapper.entityToDto(userService.save(value))))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PutMapping("/ingredient")
     public ResponseEntity<UserIngredientDTO> userIngredient(@RequestBody UserIngredientDTO userIngredientDTO){
         Optional<UserIngredient> userIngredient = userIngredientService.findById(
