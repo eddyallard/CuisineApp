@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -22,6 +23,8 @@ import qc.colval.cuisineapp.repositories.IUserRepository;
 import qc.colval.cuisineapp.security.JwtAuthenticationFilter;
 import qc.colval.cuisineapp.security.JwtAuthorizationFilter;
 import qc.colval.cuisineapp.security.UserPrincipalDetailService;
+
+import java.util.Arrays;
 
 @Configuration
 @AllArgsConstructor
@@ -66,30 +69,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                  * */
                 .antMatchers(HttpMethod.POST, "/api/user/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/user/signup").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().fullyAuthenticated();
     }
 
-    @Override
-    public void configure(final WebSecurity web) {
-        web.ignoring().antMatchers(HttpMethod.OPTIONS);
-    }
-
-
     @Bean
-    public FilterRegistrationBean processCorsFilter() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        final CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("'");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
-
-
-        final FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        return bean;
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
+        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
-
 }
