@@ -25,7 +25,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200/", maxAge = 3600)
 @RequestMapping("/api/recipe")
 @AllArgsConstructor
 public class RecipeController {
