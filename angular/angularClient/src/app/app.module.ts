@@ -19,6 +19,7 @@ import {AuthButtonComponent} from './auth-button/auth-button.component';
 import { NewRecipeComponent } from './new-recipe/new-recipe.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 @NgModule({
   declarations: [
     AppComponent,

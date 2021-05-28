@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {RecipeService} from '../recipe.service';
 import {APIRecipe} from '../interfaces/apiRecipe';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +17,8 @@ export class RecipeListComponent implements OnInit {
 
   loading : Boolean = true;
 
-  constructor(private recipeService : RecipeService) { }
+  constructor(private recipeService : RecipeService, private auth: AuthService, private router: Router) { }
+
 
   getRecipes(): void {
     this.recipeService.getRecipe().subscribe((data: APIRecipe[])=>{
@@ -24,7 +28,13 @@ export class RecipeListComponent implements OnInit {
   }  
 
   ngOnInit(): void {
-    this.getRecipes();
+  
+    if (!this.auth.isAuthenticated()){
+      this.router.navigate(['/login'])
+    }
+    else{
+      this.getRecipes();
+    }
   }
 
   refresh(): void {

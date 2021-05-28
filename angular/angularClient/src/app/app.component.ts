@@ -11,12 +11,14 @@ export class AppComponent {
 
   constructor(private auth : AuthService) {}
 
-  user : string = "";
+  user : string = "You need to login!";
 
   title = 'angularClient';
   authTag : Boolean = false;
   ngOnInit(): void {
-    this.authTag = this.auth.isAuthenticated();
-    this.user = this.auth.getCurrentUserName();
-  }
+    if (this.auth.isAuthenticated()){
+      this.user = this.auth.getCurrentUserName();
+    }
+    }
+    
 }

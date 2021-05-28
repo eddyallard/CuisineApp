@@ -16,9 +16,7 @@
         <ng-template *ngIf="authTag"> 
           <p class="nav-link">Welcome, {{user}}</p>
         </ng-template>
-        <ng-template *ngIf="!authTag"> 
-          <a class="nav-link">Login</a>
-        </ng-template>
+          <a class="nav-item" href="login">Login</a>
     </div>
   </nav>
   <router-outlet></router-outlet>
