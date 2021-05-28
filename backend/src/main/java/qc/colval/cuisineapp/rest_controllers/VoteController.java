@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200/", maxAge = 3600)
+@CrossOrigin
 @RequestMapping("/api/vote")
 @AllArgsConstructor
 public class VoteController {
