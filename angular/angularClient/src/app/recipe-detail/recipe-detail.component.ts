@@ -71,7 +71,6 @@ export class RecipeDetailComponent implements OnInit {
     console.log(metaList);
     this.ingredients = metaList[0];
     this.quantities = metaList[1];
-
     });
   }
   upvote(): void {

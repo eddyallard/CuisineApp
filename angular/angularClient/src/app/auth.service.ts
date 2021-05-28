@@ -56,6 +56,7 @@ export class AuthService {
 
   isAuthenticated(): Boolean{
     let token = localStorage.getItem('token');
+    console.log(token)
     if (token != null && this.tokenExpired(token) == false){
       return true;
     }
@@ -63,7 +64,10 @@ export class AuthService {
   }
 
   private tokenExpired(token: string) {
-    const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
-    return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+    if (localStorage.getItem('token') != null){
+      const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+      return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+    }
+    return true;
   }
 }
